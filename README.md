@@ -1,6 +1,6 @@
 # etl-engine
 Data exchange
-目前实现从influxdb v1读取数据 -> 目标数据源数据类型转换 -> 写到目标数据源 （目前目标数据源支持 influxdb v1、ck、mysql）
+实现从influxdb v1读取数据 -> 目标数据源数据类型转换 -> 写到目标数据源 （目前源数据源支持 influxdb v1、ck、mysql，目标数据源支持 influxdb v1、ck、mysql）
 # 使用方式
 ## window平台
 ```sh
