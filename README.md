@@ -42,15 +42,22 @@ Data exchange
 # 支持节点类型
 `任意一个读节点都可以输出到任意一个写节点`
 ##  DB_INPUT_TABLE
-`读数据表`
+`输入节点-读数据表`
 ##  DB_OUTPUT_TABLE
-`写数据表`
+`输出节点-写数据表`
 ##  XLS_READER
-`读 excel文件` 
+`输入节点-读 excel文件` 
 ##  XLS_WRITER
-`写 excel文件`
+`输出节点-写 excel文件`
+## DB_EXECUTE_TABLE
+`输入节点-执行数据库脚本`
+## OUTPUT_TRASH
+`输出节点-垃圾桶，没有任何输出`
 ## 组合方式
 - `DB_INPUT_TABLE -> DB_OUT_TABLE `
 - `DB_INPUT_TABLE -> XLS_WRITER `
 - `XLS_READER -> DB_OUT_TABLE `
 - `XLS_READER -> XLS_WRITER `
+- `DB_EXECUTE_TABLE -> OUTPUT_TRASH `
+- `DB_EXECUTE_TABLE -> DB_OUT_TABLE `
+- `DB_EXECUTE_TABLE -> XLS_WRITER`
