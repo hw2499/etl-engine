@@ -40,6 +40,7 @@ Data exchange
 ```
 
 # 支持节点类型
+任意一个读节点都可以输出到任意一个写节点
 ## DB_INPUT_TABLE
 读数据表
 ## DB_OUTPUT_TABLE
@@ -48,3 +49,8 @@ Data exchange
 读 excel文件 
 ## XLS_WRITER
 写 excel文件
+### 组合方式
+- `DB_INPUT_TABLE -> DB_OUT_TABLE `
+- `DB_INPUT_TABLE -> XLS_WRITER `
+- `XLS_READER -> DB_OUT_TABLE `
+- `XLS_READER -> XLS_WRITER `
