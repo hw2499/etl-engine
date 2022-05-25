@@ -61,3 +61,26 @@ Data exchange
 - `DB_EXECUTE_TABLE -> OUTPUT_TRASH `
 - `DB_EXECUTE_TABLE -> DB_OUT_TABLE `
 - `DB_EXECUTE_TABLE -> XLS_WRITER`
+
+# 支持配置全局变量
+- ###通过命令行方式传递全局变量
+
+```shell
+run_graph -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上海
+```
+其中 `arg1`和`arg2`是从命令行传递进来的全局变量
+
+- ### 配置文件中引用全局变量
+
+```shell
+    <Node id="DB_INPUT_01" dbConnection="CONNECT_01" type="DB_INPUT_TABLE" desc="节点1" fetchSize="500">
+     <Script name="sqlScript"><![CDATA[
+		         select * from (select * from t5 where tag_1='${arg2}' limit 1000)
+    ]]></Script>
+
+  <Node id="XLS_WRITER_01"   type="XLS_WRITER" desc="输出节点2" appendRow="true"  fileURL="${arg1}" _fileURL="d:/demo/test2.xlsx" startRow="3" metadataRow="2" sheetName="人员信息" outputFields="c1;c3;tag_1"  renameOutputFields="指标=B;年度=C;地区=D"  >
+ 
+```
+配置文件中`${arg1}` 会在服务运行时通过命令行参数arg1的值`d:/test3.xlsx`被替换掉<br>
+配置文件中`${arg2}` 会在服务运行时通过命令行参数arg2的值 `上海` 被替换掉
+
