@@ -63,7 +63,7 @@ Data exchange
 - `DB_EXECUTE_TABLE -> XLS_WRITER`
 
 # 支持配置全局变量
-- ###通过命令行方式传递全局变量
+- ### 通过命令行方式传递全局变量
 
 ```shell
 run_graph -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上海
