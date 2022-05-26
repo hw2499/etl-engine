@@ -84,3 +84,49 @@ run_graph -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上�
 配置文件中`${arg1}` 会在服务运行时通过命令行参数arg1的值`d:/test3.xlsx`被替换掉<br>
 配置文件中`${arg2}` 会在服务运行时通过命令行参数arg2的值 `上海` 被替换掉
 
+# 支持解析嵌入go脚本语言
+可以嵌入自己的业务逻辑
+- ### 增加字段
+`可以增加多个字段，并赋予默认值`
+```shell
+package ext
+import (
+	"errors"
+	"fmt"
+	"strconv"
+)
+func RunScript(dataValue string) (result string, topErr error) {
+	newRows := ""
+	rows := gjson.Get(dataValue, "rows")
+	for index, row := range rows.Array() {
+	  	//tmpStr, _ := sjson.Set(row.String(), "addCol1", time.Now().Format("2006-01-02 15:04:05.000"))
+		tmpStr, _ := sjson.Set(row.String(), "addCol1", "1")
+		tmpStr, _ = sjson.Set(tmpStr, "addCol2", "${arg2}")
+		newRows, _ = sjson.SetRaw(newRows, "rows.-1", tmpStr)
+	}
+	return newRows, nil
+}
+
+```
+- ### 合并字段
+`可以将多个字段合并为一个字段`
+```shell
+package ext
+import (
+	"errors"
+	"fmt"
+	"strconv"
+)
+func RunScript(dataValue string) (result string, topErr error) {
+	newRows := ""
+	rows := gjson.Get(dataValue, "rows")
+	for index, row := range rows.Array() {
+		area := gjson.Get(tmpStr,"tag_1").String()
+		year := gjson.Get(tmpStr,"c3").String()
+		tmpStr, _ = sjson.Set(tmpStr, "tag_1", area + "_" + year)
+		newRows, _ = sjson.SetRaw(newRows, "rows.-1", tmpStr)
+	}
+	return newRows, nil
+}
+
+```
