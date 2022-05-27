@@ -130,3 +130,15 @@ func RunScript(dataValue string) (result string, topErr error) {
 }
 
 ```
+
+<details><summary>欢迎对接合作</summary>
+ 
+
+#### etl-engine 目前寻求合作模式中...
+
+    ```
+     @auth Mr Huang
+     vx:weigeonlyyou
+    ```
+
+</details> 
