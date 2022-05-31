@@ -46,7 +46,7 @@ Data exchange
 ##  DB_OUTPUT_TABLE
 `输出节点-写数据表`
 ##  XLS_READER
-`输入节点-读 excel文件` 
+`输入节点-读 excel文件`
 ##  XLS_WRITER
 `输出节点-写 excel文件`
 ## DB_EXECUTE_TABLE
@@ -61,6 +61,67 @@ Data exchange
 - `DB_EXECUTE_TABLE -> OUTPUT_TRASH `
 - `DB_EXECUTE_TABLE -> DB_OUT_TABLE `
 - `DB_EXECUTE_TABLE -> XLS_WRITER`
+
+#etl-engine 配置说明
+##节点DB_INPUT_TABLE
+`输入节点`
+
+| 属性           | 说明               |
+|--------------|------------------|
+| id          | 唯一标示             |
+| type         | 类型, DB_INPUT_TABLE |
+| script       | sqlScript SQL语句  |
+| fetchSize    | 每次读取记录数          |
+| dbConnection | 数据源ID            |
+| desc         | 描述               |
+|||
+|||
+
+##支持源类型
+MYSQL、Influxdb 1x、CK
+
+###样本
+```sh
+  <Node id="DB_INPUT_01" dbConnection="CONNECT_01" type="DB_INPUT_TABLE" desc="节点1" fetchSize="1000">
+    <Script name="sqlScript"><![CDATA[
+		         select * from (select * from t4 limit 100000)
+]]></Script>
+  </Node>
+```
+
+##节点DB_OUTPUT_TABLE
+`输出节点`
+
+| 属性           | 说明                | 适合                                      |
+|--------------|-------------------|-----------------------------------------|
+| id          | 唯一标示              ||
+| type         | 类型, DB_OUTPUT_TABLE ||
+| batchSize       | 每次批提交的记录数         | ck,mysql <br/>注意influx以输入时的fetchSize为批提交的大小 |
+| outputFields    | 输入节点读数据时传递过来的字段名称 | influx,ck,mysql                         |
+| renameOutputFields    | 输出节点到目标数据源的字段名称   | influx,ck,mysql                         |
+| dbConnection | 数据源ID             ||
+| desc         | 描述                ||
+|outputTags| 输入节点读数据时传递过来的标签名称 | influx                                  |
+|renameOutputTags| 输出节点到目标数据源的标签名称   | influx                                  |
+|rp| 保留策略名称            | influx                                  |
+|measurement| 表名称               | influx                                  |
+
+##支持目标类型
+MYSQL、Influxdb 1x、CK
+
+
+###样本
+```sh
+  <Node id="DB_OUTPUT_01" type="DB_OUTPUT_TABLE" desc="写influx节点1" dbConnection="CONNECT_02" outputFields="f1;f2;f3;f4"  renameOutputFields="c1;c2;c3;c4"  outputTags="tag1;tag2;tag3;tag4"  renameOutputTags="tag_1;tag_2;tag_3;tag_4" measurement="t5" rp="autogen">
+        
+  </Node>
+  
+  <Node id="DB_OUTPUT_02" type="DB_OUTPUT_TABLE" desc="写mysql节点2" dbConnection="CONNECT_03" outputFields="time;f1;f2;f3;f4;tag1;tag2;tag3;tag4"  renameOutputFields="time;c1;c2;c3;c4;tag_1;tag_2;tag_3;tag_4" batchSize="1000" >
+        <Script name="sqlScript"><![CDATA[
+          insert into db1.t1 (time,c1,c2,c3,c4,tag_1,tag_2,tag_3,tag_4) values (?,?,?,?,?,?,?,?,?)
+    ]]></Script>
+  </Node>
+```
 
 # 支持配置全局变量
 - ### 通过命令行方式传递全局变量
@@ -131,10 +192,11 @@ func RunScript(dataValue string) (result string, topErr error) {
 
 ```
 
+# 合作模式
 <details><summary>欢迎对接合作</summary>
  
 
-#### etl-engine 目前寻求合作模式中...
+#### etl-engine 寻求合作模式中...
 
     ```
      @auth Mr Huang
@@ -142,3 +204,5 @@ func RunScript(dataValue string) (result string, topErr error) {
     ```
 
 </details> 
+
+
