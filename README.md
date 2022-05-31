@@ -62,7 +62,7 @@ Data exchange
 - `DB_EXECUTE_TABLE -> DB_OUT_TABLE `
 - `DB_EXECUTE_TABLE -> XLS_WRITER`
 
-# etl-engine 配置说明
+# 配置说明
 ## 节点DB_INPUT_TABLE
 `输入节点`
 
@@ -77,7 +77,7 @@ Data exchange
 |||
 |||
 
-## 支持源类型
+### 支持源类型
 MYSQL、Influxdb 1x、CK
 
 ### 样本
@@ -107,7 +107,7 @@ MYSQL、Influxdb 1x、CK
 |rp| 保留策略名称            | influx                                  |
 |measurement| 表名称               | influx                                  |
 
-## 支持目标类型
+### 支持目标类型
 MYSQL、Influxdb 1x、CK
 
 
