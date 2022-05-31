@@ -63,7 +63,7 @@ Data exchange
 - `DB_EXECUTE_TABLE -> XLS_WRITER`
 
 # 配置说明
-## 节点DB_INPUT_TABLE
+ ## 节点DB_INPUT_TABLE
 `输入节点`
 
 | 属性           | 说明               |
@@ -88,24 +88,42 @@ MYSQL、Influxdb 1x、CK
 ]]></Script>
   </Node>
 ```
+## 节点XLS_READER
+`输入节点`
+### 读取EXCEL文件内容
+
+| 属性           | 说明                                                            |
+|--------------|---------------------------------------------------------------|
+| id          | 唯一标示                                                          |
+| type         | 类型, XLS_READER                                                |
+| fileURL       | 文件路径+文件名称                                                     |
+| startRow    | 从第几行开始读取                                                      |
+| sheetName | 表名称                                                           |
+| fieldMap         | 字段映射关系，格式：field1=A;field2=B;field3=C<br/>字段名称=第几列 多个字段之间用分号分隔 |
+
+### 样本
+```shell
+  <Node id="XLS_READER_01"   type="XLS_READER" desc="输入节点1"  fileURL="d:/demo/test1.xlsx" startRow="2" sheetName="人员信息" fieldMap="field1=1;field2=2;field3=3">
+  </Node>
+```
 
 ## 节点DB_OUTPUT_TABLE
 `输出节点`
 
-| 属性           | 说明                | 适合                                      |
-|--------------|-------------------|-----------------------------------------|
-| id          | 唯一标示              ||
-| type         | 类型, DB_OUTPUT_TABLE ||
+| 属性           | 说明                         | 适合                                      |
+|--------------|----------------------------|-----------------------------------------|
+| id          | 唯一标示                       ||
+| type         | 类型, DB_OUTPUT_TABLE        ||
 |sqlScript| insert、delete、update SQL语句 |ck,mysql|
-| batchSize       | 每次批提交的记录数         | ck,mysql <br/>注意influx以输入时的fetchSize为批提交的大小 |
-| outputFields    | 输入节点读数据时传递过来的字段名称 | influx,ck,mysql                         |
-| renameOutputFields    | 输出节点到目标数据源的字段名称   | influx,ck,mysql                         |
-| dbConnection | 数据源ID             ||
-| desc         | 描述                ||
-|outputTags| 输入节点读数据时传递过来的标签名称 | influx                                  |
-|renameOutputTags| 输出节点到目标数据源的标签名称   | influx                                  |
-|rp| 保留策略名称            | influx                                  |
-|measurement| 表名称               | influx                                  |
+| batchSize       | 每次批提交的记录数                  | ck,mysql <br/>注意influx以输入时的fetchSize为批提交的大小 |
+| outputFields    | 输入节点读数据时传递过来的字段名称          | influx,ck,mysql                         |
+| renameOutputFields    | 输出节点到目标数据源的字段名称            | influx,ck,mysql                         |
+| dbConnection | 数据源ID                      ||
+| desc         | 描述                         ||
+|outputTags| 输入节点读数据时传递过来的标签名称          | influx                                  |
+|renameOutputTags| 输出节点到目标数据源的标签名称            | influx                                  |
+|rp| 保留策略名称                     | influx                                  |
+|measurement| 表名称                        | influx                                  |
 
 ### 支持目标类型
 MYSQL、Influxdb 1x、CK
@@ -123,6 +141,31 @@ MYSQL、Influxdb 1x、CK
     ]]></Script>
   </Node>
 ```
+
+## 节点XLS_WRITER
+`输出节点`
+### 写入EXCEL文件内容
+
+| 属性           | 说明                                                |
+|--------------|---------------------------------------------------|
+| id          | 唯一标示                                              |
+| type         | 类型, XLS_WRITER                                    |
+| fileURL       | 文件路径+文件名称                                         |
+| startRow    | 从第几行开始读取  如：数字2代表是第2行 开始写数据                       |
+| sheetName | 表名称                                               |
+|outputFields| 输入节点传递过来的字段名称，<br/>格式：field1;field2;field3        |
+| renameOutputFields         | 字段映射关系，格式：指标=B;年度=C;地区=D<br/>字段名称=第几列 多个字段之间用分号分隔 |
+|metadataRow| 输出EXCEL文件中第几行输出字段名称，如：数字1代表是第1行 开始写字段名称           |
+|appendRow| true代表追加记录模式，false代表覆盖模式。                         |
+
+
+### 样本
+```shell
+  <Node id="XLS_WRITER_01"   type="XLS_WRITER" desc="输出节点2" appendRow="true"  fileURL="d:/demo/test2.xlsx" startRow="3" metadataRow="2" sheetName="人员信息" outputFields="c1;c3;tag_1"  renameOutputFields="指标=B;年度=C;地区=D"  >
+    </Node>
+```
+
+
 
 # 支持配置全局变量
 - ### 通过命令行方式传递全局变量
