@@ -96,6 +96,7 @@ MYSQL、Influxdb 1x、CK
 |--------------|-------------------|-----------------------------------------|
 | id          | 唯一标示              ||
 | type         | 类型, DB_OUTPUT_TABLE ||
+|sqlScript| insert、delete、update SQL语句 |ck,mysql|
 | batchSize       | 每次批提交的记录数         | ck,mysql <br/>注意influx以输入时的fetchSize为批提交的大小 |
 | outputFields    | 输入节点读数据时传递过来的字段名称 | influx,ck,mysql                         |
 | renameOutputFields    | 输出节点到目标数据源的字段名称   | influx,ck,mysql                         |
