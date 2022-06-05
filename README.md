@@ -1,6 +1,9 @@
 # etl-engine
 Data exchange
-实现从源读取数据 -> 目标数据类型转换 -> 写到目标数据源 （目前源数据支持 influxdb v1、ck、mysql、excel，目标数据支持 influxdb v1、ck、mysql、excel）
+实现从源读取数据 -> 目标数据类型转换 -> 写到目标数据源 （目前源数据支持 influxdb v1、ck、mysql、excel、mq，目标数据支持 influxdb v1、ck、mysql、excel、mq）
+
+`数据中台必备，架构师利器`
+
 # 使用方式
 ## window平台
 ```sh
@@ -53,6 +56,10 @@ Data exchange
 `输入节点-执行数据库脚本`
 ## OUTPUT_TRASH
 `输出节点-垃圾桶，没有任何输出`
+## MQ_CONSUMER
+`输入节点-MQ消费者`
+
+- 
 ## 组合方式
 - `DB_INPUT_TABLE -> DB_OUT_TABLE `
 - `DB_INPUT_TABLE -> XLS_WRITER `
@@ -61,9 +68,13 @@ Data exchange
 - `DB_EXECUTE_TABLE -> OUTPUT_TRASH `
 - `DB_EXECUTE_TABLE -> DB_OUT_TABLE `
 - `DB_EXECUTE_TABLE -> XLS_WRITER`
+- `MQ_CONSUMER -> DB_OUT_TABLE`
+- `MQ_CONSUMER -> XLS_WRITER`
+
+
 
 # 配置说明
- ## 节点DB_INPUT_TABLE
+## 节点DB_INPUT_TABLE
 `输入节点`
 
 | 属性           | 说明               |
@@ -77,7 +88,7 @@ Data exchange
 |||
 |||
 
-### 支持源类型
+###支持源类型
 MYSQL、Influxdb 1x、CK
 
 ### 样本
@@ -107,7 +118,7 @@ MYSQL、Influxdb 1x、CK
   </Node>
 ```
 
-## 节点DB_OUTPUT_TABLE
+##节点DB_OUTPUT_TABLE
 `输出节点`
 
 | 属性           | 说明                         | 适合                                      |
@@ -125,7 +136,7 @@ MYSQL、Influxdb 1x、CK
 |rp| 保留策略名称                     | influx                                  |
 |measurement| 表名称                        | influx                                  |
 
-### 支持目标类型
+##支持目标类型
 MYSQL、Influxdb 1x、CK
 
 
@@ -142,7 +153,7 @@ MYSQL、Influxdb 1x、CK
   </Node>
 ```
 
-## 节点XLS_WRITER
+##节点XLS_WRITER
 `输出节点`
 ### 写入EXCEL文件内容
 
@@ -166,9 +177,30 @@ MYSQL、Influxdb 1x、CK
 ```
 
 
+## 节点MQ_CONSUMER
+`输入节点`
+### mq消息者 （目前支持rocketmq）
+
+| 属性         | 说明                             | 适合           |
+|------------|--------------------------------|--------------|
+| id         | 唯一标示                           ||
+| type       | MQ_CONSUMER                    |              |
+| flag       | 默认值：ROCKETMQ                   | 目前支持rocketmq |
+| nameServer | mq服务器地址，格式：127.0.0.1:8080      |              |
+| group      | mq组名称                          |              |
+| topic      | 订阅主题名称                         |              |
+| tag        | 标签名称，格式：*代表消费全部标签,<br/>tag_1代表只消费tag_1标签|  |
+
+
+### 样本
+```shell
+    <Node id="MQ_CONSUMER_02" type="MQ_CONSUMER" flag="ROCKETMQ" nameServer="127.0.0.1:8080" group="group_1" topic="out_event_user_info" tag="*"></Node>
+```
+
+
 
 # 支持配置全局变量
-- ### 通过命令行方式传递全局变量
+### 通过命令行方式传递全局变量
 
 ```shell
 run_graph -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上海
