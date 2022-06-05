@@ -59,7 +59,7 @@ Data exchange
 ## MQ_CONSUMER
 `输入节点-MQ消费者`
 
-- 
+
 ## 组合方式
 - `DB_INPUT_TABLE -> DB_OUT_TABLE `
 - `DB_INPUT_TABLE -> XLS_WRITER `
@@ -88,7 +88,7 @@ Data exchange
 |||
 |||
 
-###支持源类型
+### 支持源类型
 MYSQL、Influxdb 1x、CK
 
 ### 样本
@@ -118,7 +118,7 @@ MYSQL、Influxdb 1x、CK
   </Node>
 ```
 
-##节点DB_OUTPUT_TABLE
+## 节点DB_OUTPUT_TABLE
 `输出节点`
 
 | 属性           | 说明                         | 适合                                      |
@@ -136,7 +136,7 @@ MYSQL、Influxdb 1x、CK
 |rp| 保留策略名称                     | influx                                  |
 |measurement| 表名称                        | influx                                  |
 
-##支持目标类型
+## 支持目标类型
 MYSQL、Influxdb 1x、CK
 
 
@@ -153,7 +153,7 @@ MYSQL、Influxdb 1x、CK
   </Node>
 ```
 
-##节点XLS_WRITER
+## 节点XLS_WRITER
 `输出节点`
 ### 写入EXCEL文件内容
 
