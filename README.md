@@ -4,6 +4,9 @@ Data exchange
 
 `数据中台必备，架构师利器`
 
+
+[下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0)
+
 # 使用方式
 ## window平台
 ```sh
