@@ -58,18 +58,24 @@ Data exchange
 `输出节点-垃圾桶，没有任何输出`
 ## MQ_CONSUMER
 `输入节点-MQ消费者`
+## MQ_PRODUCER
+`输出节点-MQ生产者`
 
 
 ## 组合方式
 - `DB_INPUT_TABLE -> DB_OUT_TABLE `
 - `DB_INPUT_TABLE -> XLS_WRITER `
+- `DB_INPUT_TABLE -> MQ_PRODUCER `
 - `XLS_READER -> DB_OUT_TABLE `
 - `XLS_READER -> XLS_WRITER `
+- `XLS_READER -> MQ_PRODUCER `
 - `DB_EXECUTE_TABLE -> OUTPUT_TRASH `
 - `DB_EXECUTE_TABLE -> DB_OUT_TABLE `
 - `DB_EXECUTE_TABLE -> XLS_WRITER`
+- `DB_EXECUTE_TABLE -> MQ_PRODUCER`
 - `MQ_CONSUMER -> DB_OUT_TABLE`
 - `MQ_CONSUMER -> XLS_WRITER`
+- `MQ_CONSUMER -> MQ_PRODUCER`
 
 
 
@@ -196,6 +202,31 @@ MYSQL、Influxdb 1x、CK
 ```shell
     <Node id="MQ_CONSUMER_02" type="MQ_CONSUMER" flag="ROCKETMQ" nameServer="127.0.0.1:8080" group="group_1" topic="out_event_user_info" tag="*"></Node>
 ```
+
+## 节点MQ_PRODUCER
+`输出节点`
+### mq生产者 （目前支持rocketmq）
+
+| 属性         | 说明                        | 适合           |
+|------------|---------------------------|--------------|
+| id         | 唯一标示                      ||
+| type       | MQ_PRODUCER               |              |
+| flag       | 默认值：ROCKETMQ              | 目前支持rocketmq |
+| nameServer | mq服务器地址，格式：127.0.0.1:8080 |              |
+| group      | mq组名称                     |              |
+| topic      | 订阅主题名称                    |              |
+| tag        | 标签名称，格式：tag_1             |  |
+| sendFlag        | 发送模式,1是同步；2是异步；3是单向       |  |
+|outputFields| 输入节点传递过来的字段名称，<br/>格式：field1;field2;field3 多个字段之间用分号分隔        |
+| renameOutputFields         | 字段映射关系，格式：field1;field2;field3  多个字段之间用分号分隔 |
+
+### 样本
+```shell
+    <Node id="MQ_PRODUCER_01" type="MQ_PRODUCER" flag="ROCKETMQ" nameServer="127.0.0.1:8080" group="group_11" topic="out_event_system_user" tag="tag_1"
+          sendFlag="3" outputFields="time;tag_1;c2"  renameOutputFields="时间;设备;指标" >
+    </Node>
+```
+
 
 
 
