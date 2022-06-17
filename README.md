@@ -30,7 +30,7 @@ Data exchange
   </Node>
   <Node id="DB_OUTPUT_01" type="DB_OUTPUT_TABLE" desc="节点2" dbConnection="CONNECT_02" outputFields="f1;f2" renameOutputFields="c1;c2" outputTags="tag1;tag4"  renameOutputTags="tag_1;tag_4"  measurement="t1" rp="autogen">
   </Node>
-  <Line id="LINE_01" type="LINE_1" from="DB_INPUT_01" to="DB_OUTPUT_01" order="0" metadata="METADATA_01"></Line>
+  <Line id="LINE_01" type="STANDARD" from="DB_INPUT_01" to="DB_OUTPUT_01" order="0" metadata="METADATA_01"></Line>
   <Metadata id="METADATA_01">
     <Field name="c1" type="string" default="-1" nullable="false"/>
     <Field name="c2" type="int" default="-1" nullable="false"/>
