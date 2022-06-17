@@ -9,9 +9,9 @@ Data exchange
 
 # 数据流图
 
-![输入输出](./docs/input_output.png?raw=true)
+![输入输出](docs/input_output.png)
 
-![数据流复制](https://raw.githubusercontent.com/hw2499/etl-engine/main/docs/copy_stream.png)
+![数据流复制](docs/copy_stream.png)
 
 
 
