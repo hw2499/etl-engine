@@ -63,6 +63,8 @@ Data exchange
 `输入节点-MQ消费者`
 ## MQ_PRODUCER
 `输出节点-MQ生产者`
+## COPY_STREAM
+`数据流拷贝节点，既是输出又是输入`
 
 
 ## 组合方式
@@ -79,7 +81,12 @@ Data exchange
 - `MQ_CONSUMER -> DB_OUT_TABLE`
 - `MQ_CONSUMER -> XLS_WRITER`
 - `MQ_CONSUMER -> MQ_PRODUCER`
-
+- `DB_INPUT_TABLE -> COPY_STREAM `
+- `XLS_READER -> COPY_STREAM `
+- `MQ_CONSUMER -> COPY_STREAM `
+- `COPY_STREAM -> DB_OUT_TABLE `
+- `COPY_STREAM -> XLS_WRITER `
+- `COPY_STREAM -> MQ_PRODUCER `
 
 
 # 配置说明
@@ -94,8 +101,7 @@ Data exchange
 | fetchSize    | 每次读取记录数          |
 | dbConnection | 数据源ID            |
 | desc         | 描述               |
-|||
-|||
+
 
 ### 支持源类型
 MYSQL、Influxdb 1x、CK
@@ -194,7 +200,7 @@ MYSQL、Influxdb 1x、CK
 |------------|--------------------------------|--------------|
 | id         | 唯一标示                           ||
 | type       | MQ_CONSUMER                    |              |
-| flag       | 默认值：ROCKETMQ                   | 目前支持rocketmq |
+| flag       | 默认值：ROCKETMQ                   | 支持rocketmq |
 | nameServer | mq服务器地址，格式：127.0.0.1:8080      |              |
 | group      | mq组名称                          |              |
 | topic      | 订阅主题名称                         |              |
@@ -214,7 +220,7 @@ MYSQL、Influxdb 1x、CK
 |------------|---------------------------|--------------|
 | id         | 唯一标示                      ||
 | type       | MQ_PRODUCER               |              |
-| flag       | 默认值：ROCKETMQ              | 目前支持rocketmq |
+| flag       | 默认值：ROCKETMQ              | 支持rocketmq |
 | nameServer | mq服务器地址，格式：127.0.0.1:8080 |              |
 | group      | mq组名称                     |              |
 | topic      | 订阅主题名称                    |              |
@@ -230,6 +236,22 @@ MYSQL、Influxdb 1x、CK
     </Node>
 ```
 
+## 数据流拷贝节点
+`将一个输入节点的数据流输出到多个分支输出节点`
+
+| 属性         | 说明          | 适合      |
+|---|-------------|---|
+| id         | 唯一标示        ||
+| type       | COPY_STREAM |         |
+
+
+### 样本
+```shell
+  <Node id="COPY_STREAM_01" type="COPY_STREAM" desc="数据流拷贝节点" ></Node>
+  <Line id="LINE_01" type="STANDARD" from="DB_INPUT_01" to="COPY_STREAM_01" order="1" metadata="METADATA_01" ></Line>
+  <Line id="LINE_02" type="COPY" from="COPY_STREAM_01:0" to="DB_OUTPUT_01" order="2" metadata="METADATA_01"></Line>
+  <Line id="LINE_03" type="COPY" from="COPY_STREAM_01:1" to="DB_OUTPUT_02" order="2" metadata="METADATA_02"></Line>
+```
 
 
 
