@@ -7,6 +7,14 @@ Data exchange
 
 [下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0)
 
+# 数据流图
+
+![输入输出](./docs/input_output.png)
+
+![数据流复制](./docs/copy_stream.png)
+
+
+
 # 使用方式
 ## window平台
 ```sh
