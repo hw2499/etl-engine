@@ -11,7 +11,7 @@ Data exchange
 
 ![输入输出](./docs/input_output.png?raw=true)
 
-![数据流复制](https://github.com/hw2499/etl-engine/raw/main/docs/copy_stream.png?raw=true)
+![数据流复制](https://raw.githubusercontent.com/hw2499/etl-engine/main/docs/copy_stream.png)
 
 
 
