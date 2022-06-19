@@ -9,11 +9,14 @@ Data exchange
 
 # 数据流特性
 
-- 输入输出任意组合
+- 输入输出任意组合 
+
 ![输入输出](https://i.postimg.cc/yxYHLv3y/input-output.png)
-- 解析嵌入脚本语言 方便格式转换
+- 解析嵌入脚本语言 方便格式转换 
+
 ![支持嵌入脚本语言](https://i.postimg.cc/908jKZG5/script.png)
-- 数据流复制 方便多路输出
+- 数据流复制 方便多路输出 
+
 ![数据流复制](https://i.postimg.cc/9FY9RMc3/copy-stream.png)
 
 
