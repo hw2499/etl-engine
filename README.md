@@ -1,6 +1,8 @@
 # etl-engine
 Data exchange
-实现从源读取数据 -> 目标数据类型转换 -> 写到目标数据源 （目前源数据支持 influxdb v1、ck、mysql、excel、mq，目标数据支持 influxdb v1、ck、mysql、excel、mq）
+实现从源读取数据 -> 目标数据类型转换 -> 写到目标数据源 
+目前源数据支持 influxdb v1、ck、mysql、excel、mq、redis，
+目标数据支持 influxdb v1、ck、mysql、excel、mq、redis
 
 `数据中台必备，架构师利器`
 
@@ -79,28 +81,41 @@ Data exchange
 `输出节点-MQ生产者`
 ## COPY_STREAM
 `数据流拷贝节点，位于输入节点和输出节点之间，既是输出又是输入`
-
+## REDIS_READER
+`输入节点-读 redis`
+## REDIS_WRITER
+`输出节点-写 redis`
 
 ## 组合方式
 - `DB_INPUT_TABLE -> DB_OUT_TABLE `
 - `DB_INPUT_TABLE -> XLS_WRITER `
 - `DB_INPUT_TABLE -> MQ_PRODUCER `
+- `DB_INPUT_TABLE -> REDIS_WRITER `
 - `XLS_READER -> DB_OUT_TABLE `
 - `XLS_READER -> XLS_WRITER `
 - `XLS_READER -> MQ_PRODUCER `
+- `XLS_READER -> REDIS_WRITER `
 - `DB_EXECUTE_TABLE -> OUTPUT_TRASH `
 - `DB_EXECUTE_TABLE -> DB_OUT_TABLE `
 - `DB_EXECUTE_TABLE -> XLS_WRITER`
 - `DB_EXECUTE_TABLE -> MQ_PRODUCER`
+- `DB_EXECUTE_TABLE -> REDIS_WRITER`
 - `MQ_CONSUMER -> DB_OUT_TABLE`
 - `MQ_CONSUMER -> XLS_WRITER`
 - `MQ_CONSUMER -> MQ_PRODUCER`
+- `MQ_CONSUMER -> REDIS_WRITER`
 - `DB_INPUT_TABLE -> COPY_STREAM `
 - `XLS_READER -> COPY_STREAM `
 - `MQ_CONSUMER -> COPY_STREAM `
+- `REDIS_READER -> COPY_STREAM `
 - `COPY_STREAM -> DB_OUT_TABLE `
 - `COPY_STREAM -> XLS_WRITER `
 - `COPY_STREAM -> MQ_PRODUCER `
+- `COPY_STREAM -> REDIS_WRITE `
+- `REDIS_READER -> DB_OUT_TABLE `
+- `REDIS_READER -> XLS_WRITER `
+- `REDIS_READER -> MQ_PRODUCER `
+- `REDIS_READER -> REDIS_WRITER `
 
 
 # 配置说明
@@ -266,6 +281,51 @@ MYSQL、Influxdb 1x、CK
   <Line id="LINE_02" type="COPY" from="COPY_STREAM_01:0" to="DB_OUTPUT_01" order="2" metadata="METADATA_01"></Line>
   <Line id="LINE_03" type="COPY" from="COPY_STREAM_01:1" to="DB_OUTPUT_02" order="2" metadata="METADATA_02"></Line>
 ```
+
+
+## 节点REDIS_READER
+`输入节点`
+
+| 属性         | 说明             | 适合    |
+|---|---|-------|
+| id         | 唯一标示           ||
+| type       | REDIS_READER   |       |
+| nameServer       | 127.0.0.1:6379 |       |
+| password       | ******         |       |
+| db       | 0              | 数据库ID |
+| isGetTTL       | true或false 是否读取ttl信息    |       |
+| keys       | 读取的KEY，多个KEY之间用分号分隔    |  目前只支持读取string,int,float类型内容     |
+
+
+### 样本
+```shell
+
+  <Node id="REDIS_READER_01"   type="REDIS_READER" desc="输入节点1" 
+  nameServer="127.0.0.1:16379" password="123456" db="0" isGetTTL="true" keys="a1;a_1" ></Node>
+```
+
+## 节点REDIS_WRITER
+`输出节点，因key名称不可重复，所以只适合将读节点中的最后一行记录进行写入操作`
+
+
+| 属性         | 说明                   | 适合                         |
+|---|----------------------|----------------------------|
+| id         | 唯一标示                 ||
+| type       | REDIS_WRITER         |                            |
+| nameServer       | 127.0.0.1:6379       |                            |
+| password       | ******               |                            |
+| db       | 0                    | 数据库ID                      |
+| isGetTTL       | true或false 是否写入ttl信息 |                            |
+| outputFields       |   | 目前只支持写string,int,float类型内容 |
+| renameOutputFields       |   | 目前只支持写string,int,float类型内容 |
+
+### 样本
+```shell
+
+  <Node id="REDIS_WRITER_01"   type="REDIS_WRITER" desc="输出节点1"  nameServer="127.0.0.1:16379" password="123456" db="1" 
+  isGetTTL="true" outputFields="a1;a_1"  renameOutputFields="f1;f2"  ></Node>
+```
+
 
 
 
