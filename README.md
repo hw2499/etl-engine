@@ -302,7 +302,7 @@ MYSQL、Influxdb 1x、CK
 ```shell
 
   <Node id="REDIS_READER_01"   type="REDIS_READER" desc="输入节点1" 
-  nameServer="127.0.0.1:16379" password="123456" db="0" isGetTTL="true" keys="a1;a_1" ></Node>
+  nameServer="127.0.0.1:6379" password="******" db="0" isGetTTL="true" keys="a1;a_1" ></Node>
 ```
 
 ## 节点REDIS_WRITER
@@ -323,7 +323,7 @@ MYSQL、Influxdb 1x、CK
 ### 样本
 ```shell
 
-  <Node id="REDIS_WRITER_01"   type="REDIS_WRITER" desc="输出节点1"  nameServer="127.0.0.1:16379" password="123456" db="1" 
+  <Node id="REDIS_WRITER_01"   type="REDIS_WRITER" desc="输出节点1"  nameServer="127.0.0.1:6379" password="******" db="1" 
   isGetTTL="true" outputFields="a1;a_1"  renameOutputFields="f1;f2"  ></Node>
 ```
 
