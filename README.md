@@ -351,16 +351,7 @@ MYSQL、Influxdb 1x、CK
                         "time"
                     )
                     func RunScript() (result string, topErr error) {
-                        defer func() {
-                            if topLevelErr := recover(); topLevelErr != nil {
-                                //fmt.Println("RunScript 捕获致命错误", topLevelErr)
-                                //命名返回变量
-                                topErr = errors.New("RunScript 捕获致命错误" + topLevelErr.(error).Error())
-                    
-                            } else {
-                                topErr = nil
-                            }
-                        }()
+                        
                         newRows := ""
                         tmpStr:=""
                         tmpStr, _ = sjson.Set(tmpStr, "value", "1")
