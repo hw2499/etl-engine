@@ -338,36 +338,7 @@ MYSQL、Influxdb 1x、CK
 | id         | 唯一标示                 ||
 | type       | CUSTOM_READER_WRITER         |                            |
 
-### 样本
-```shell
-   <Node id="CUSTOM_READER_WRITER_01" type="CUSTOM_READER_WRITER"   >
-        <AfterOut>
-            <![CDATA[
-                    package ext
-                    import (
-                        "errors"
-                        "fmt"
-                        "strconv"
-                        "time"
-                    )
-                    func RunScript() (result string, topErr error) {
-                        
-                        newRows := ""
-                        tmpStr:=""
-                        tmpStr, _ = sjson.Set(tmpStr, "value", "1")
-                        newRows, _ = sjson.SetRaw(newRows, "rows.-1", tmpStr)
-                        fmt.Println(newRows)
-                        return newRows, nil
-                    }
 
-                   ]]>
-        </AfterOut>
-    </Node>
-
-    <Node id="OUTPUT_TRASH_01"   type="OUTPUT_TRASH" desc="垃圾桶节点1"  > </Node>
-    <Line id="LINE_01" type="STANDARD" from="CUSTOM_READER_WRITER_01" to="OUTPUT_TRASH_01" order="1" metadata="METADATA_02"></Line>
-
-```
 
 
 
