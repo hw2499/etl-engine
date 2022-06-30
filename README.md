@@ -403,7 +403,7 @@ func RunScript(dataValue string) (result string, topErr error) {
 <details><summary>欢迎对接合作</summary>
  
 
-#### etl-engine 寻求合作模式中...
+#### etl-engine 全行业可接...
 
     ```
      @auth Mr Huang
