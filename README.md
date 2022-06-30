@@ -86,6 +86,8 @@ Data exchange
 `输入节点-读 redis`
 ## REDIS_WRITER
 `输出节点-写 redis`
+## CUSTOM_READER_WRITER
+`自定义节点，通过嵌入go脚本来实现各种操作`
 
 ## 组合方式
 - `DB_INPUT_TABLE -> DB_OUT_TABLE `
@@ -325,6 +327,55 @@ MYSQL、Influxdb 1x、CK
 
   <Node id="REDIS_WRITER_01"   type="REDIS_WRITER" desc="输出节点1"  nameServer="127.0.0.1:6379" password="******" db="1" 
   isGetTTL="true" outputFields="a1;a_1"  renameOutputFields="f1;f2"  ></Node>
+```
+
+## 节点CUSTOM_READER_WRITER
+`自定义节点，可以通过嵌入GO脚本实现各种操作`
+
+
+| 属性         | 说明                   | 适合                         |
+|---|----------------------|----------------------------|
+| id         | 唯一标示                 ||
+| type       | CUSTOM_READER_WRITER         |                            |
+
+### 样本
+```shell
+   <Node id="CUSTOM_READER_WRITER_01" type="CUSTOM_READER_WRITER"   >
+        <AfterOut>
+            <![CDATA[
+                    package ext
+                    import (
+                        "errors"
+                        "fmt"
+                        "strconv"
+                        "time"
+                    )
+                    func RunScript() (result string, topErr error) {
+                        defer func() {
+                            if topLevelErr := recover(); topLevelErr != nil {
+                                //fmt.Println("RunScript 捕获致命错误", topLevelErr)
+                                //命名返回变量
+                                topErr = errors.New("RunScript 捕获致命错误" + topLevelErr.(error).Error())
+                    
+                            } else {
+                                topErr = nil
+                            }
+                        }()
+                        newRows := ""
+                        tmpStr:=""
+                        tmpStr, _ = sjson.Set(tmpStr, "value", "1")
+                        newRows, _ = sjson.SetRaw(newRows, "rows.-1", tmpStr)
+                        fmt.Println(newRows)
+                        return newRows, nil
+                    }
+
+                   ]]>
+        </AfterOut>
+    </Node>
+
+    <Node id="OUTPUT_TRASH_01"   type="OUTPUT_TRASH" desc="垃圾桶节点1"  > </Node>
+    <Line id="LINE_01" type="STANDARD" from="CUSTOM_READER_WRITER_01" to="OUTPUT_TRASH_01" order="1" metadata="METADATA_02"></Line>
+
 ```
 
 
