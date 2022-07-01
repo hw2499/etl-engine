@@ -344,6 +344,36 @@ MYSQL、Influxdb 1x、CK
 
 
 
+## 元数据Metadata
+
+元数据文件定义目标数据格式（如输出节点中定义的renameOutputFields或renameOutputTags所对应的字段名称及字段类型）
+`outputFields是输入节点中数据结果集中的字段名称，
+将outputFields定义的字段转换成renameOutputFields定义的字段，其renameOutputFields转换格式通过元数据文件来定义。`
+
+| 属性    | 说明         | 适合                                               |
+|-------|------------|--------------------------------------------------|
+| id    | 唯一标示       ||
+| field |            |                                                  |
+| name  | 输出数据源的字段名称 | renameOutputFields,<br/>renameOutputTags         |
+| type  | 输出数据源的字段类型 | string,int,int32,float,<br/>str_timestamp,decimal |
+| default | 默认值        | 当nullable为false时，如果输出值为空字符串，则可以通过default来指定输出的默认值 |
+| nullable| 是否允许为空     | false不允许为空，必须和default配合使用。true允许为空。             |
+
+
+## 数据源Connection
+
+| 属性   | 说明       | 适合                 |
+|---|----------|--------------------|
+| id   | 唯一标示     |  |
+| type   | 数据源类型    |INFLUXDB_V1、MYSQL、CLICKHOUSE|
+| dbURL | 连接地址     | ck,mysql,influx    |
+| database   | 数据库名称    | ck,mysql,influx    |
+| username   | 用户名称     | ck,mysql,influx    |
+| password   | 密码       | ck,mysql,influx    |
+| token   | token名称  | influx 2x          |
+| org   | 机构名称     | influx 2x          |
+| rp   | 数据保留策略名称 | influx 1x          |
+
 
 
 
