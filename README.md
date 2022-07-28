@@ -62,6 +62,13 @@ Data exchange
   </Node>
   <Node id="DB_OUTPUT_01" type="DB_OUTPUT_TABLE" desc="节点2" dbConnection="CONNECT_02" outputFields="f1;f2" renameOutputFields="c1;c2" outputTags="tag1;tag4"  renameOutputTags="tag_1;tag_4"  measurement="t1" rp="autogen">
   </Node>
+  <!--
+     <Node id="DB_OUTPUT_02" type="DB_OUTPUT_TABLE" desc="节点3" dbConnection="CONNECT_03" outputFields="f1;f2;f3"  renameOutputFields="c1;c2;c3"  batchSize="1000"  >
+        <Script name="sqlScript"><![CDATA[
+           insert into db1.t1 (c1,c2,c3) values (?,?,?)
+    ]]></Script>
+    </Node>
+  -->
   <Line id="LINE_01" type="STANDARD" from="DB_INPUT_01" to="DB_OUTPUT_01" order="0" metadata="METADATA_01"></Line>
   <Metadata id="METADATA_01">
     <Field name="c1" type="string" default="-1" nullable="false"/>
@@ -72,8 +79,8 @@ Data exchange
   <Connection id="CONNECT_01" dbURL="http://127.0.0.1:58080" database="db1" username="user1" password="******" token=" " org="hw"  type="INFLUXDB_V1"/>
 
   <Connection id="CONNECT_02" dbURL="http://127.0.0.1:58086" database="db1" username="user1" password="******" token=" " org="hw"  type="INFLUXDB_V1"/>
- <!--    <Connection id="CONNECT_02" dbURL="127.0.0.1:19000" database="db1" username="user1" password="******" type="CLICKHOUSE"/>-->
-  <!--    <Connection id="CONNECT_02" dbURL="127.0.0.1:3306" database="db1" username="user1" password="******" type="MYSQL"/>-->
+ <!--    <Connection id="CONNECT_04" dbURL="127.0.0.1:19000" database="db1" username="user1" password="******" type="CLICKHOUSE"/>-->
+  <!--    <Connection id="CONNECT_03" dbURL="127.0.0.1:3306" database="db1" username="user1" password="******" type="MYSQL"/>-->
 </Graph>
 ```
 
