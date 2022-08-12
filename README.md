@@ -39,6 +39,15 @@ Data exchange
 ![自定义节点](https://i.postimg.cc/fL790zMh/custom-node.png)  
 
 
+# 调度集成方案
+
+
+- run_crontab与run_graph灵活组合 
+
+![集成方案](https://i.postimg.cc/qqHT8sN4/crontab.png)
+
+
+
 # 使用方式
 ## window平台
 ```sh
