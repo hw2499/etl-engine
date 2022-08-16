@@ -7,7 +7,7 @@ Data exchange
 
 [下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0)
 
-`当前版本最后编译时间20220811`
+`当前版本最后编译时间20220816`
 
 
 #  功能特性
@@ -119,6 +119,9 @@ Data exchange
 `输出节点-写 redis`
 ## CUSTOM_READER_WRITER
 `自定义节点，通过嵌入go脚本来实现各种操作`
+## EXECUTE_SHELL
+`输入节点-执行系统脚本节点`
+
 
 ## 组合方式
 - `DB_INPUT_TABLE -> DB_OUT_TABLE `
@@ -151,6 +154,12 @@ Data exchange
 - `REDIS_READER -> MQ_PRODUCER `
 - `REDIS_READER -> REDIS_WRITER `
 - `CUSTOM_READER_WRITER -> OUTPUT_TRASH `
+- `EXECUTE_SHELL -> DB_OUT_TABLE `
+- `EXECUTE_SHELL -> XLS_WRITER `
+- `EXECUTE_SHELL -> MQ_PRODUCER `
+- `EXECUTE_SHELL -> REDIS_WRITER `
+- `EXECUTE_SHELL -> OUTPUT_TRASH `
+
 
 # 配置说明
 ## 节点DB_INPUT_TABLE
@@ -368,6 +377,30 @@ MYSQL、Influxdb 1x、CK
 |---|----------------------|----------------------------|
 | id         | 唯一标示                 ||
 | type       | CUSTOM_READER_WRITER         |                            |
+
+
+
+## 节点EXECUTE_SHELL
+`输入节点-执行系统脚本节点`
+
+
+| 属性         | 说明              | 适合                                           |
+|---|-----------------|----------------------------------------------|
+| id         | 唯一标示            ||
+| type       | EXECUTE_SHELL   |                                              |
+| fileURL       | 外部脚本文件位置        | fileURL与Script两者只能出现一个，同时出现时fileURL优先于Script |
+| Script       | 脚本内容            |                                              |
+| outLogFileURL       | 控制台输出内容到指定的日志文件 |                                              |
+
+```shell
+<Node id="EXECUTE_SHELL_01"  type="EXECUTE_SHELL" desc="节点1"  _fileURL="d:/test1.bat" outLogFileURL="d:/test1_log.txt">
+    <Script><![CDATA[
+    c:
+    dir/w
+]]></Script>
+  </Node>
+```
+
 
 
 
