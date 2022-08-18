@@ -7,7 +7,7 @@ Data exchange
 
 [下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0)
 
-`当前版本最后编译时间20220816`
+`当前版本最后编译时间20220818`
 
 
 #  功能特性
@@ -121,7 +121,8 @@ Data exchange
 `自定义节点，通过嵌入go脚本来实现各种操作`
 ## EXECUTE_SHELL
 `输入节点-执行系统脚本节点`
-
+## CSV_READER
+`输入节点-读取CSV文件节点`
 
 ## 组合方式
 - `DB_INPUT_TABLE -> DB_OUT_TABLE `
@@ -159,6 +160,11 @@ Data exchange
 - `EXECUTE_SHELL -> MQ_PRODUCER `
 - `EXECUTE_SHELL -> REDIS_WRITER `
 - `EXECUTE_SHELL -> OUTPUT_TRASH `
+- `CSV_READER -> DB_OUT_TABLE `
+- `CSV_READER -> XLS_WRITER `
+- `CSV_READER -> MQ_PRODUCER `
+- `CSV_READER -> REDIS_WRITER `
+- `CSV_READER -> OUTPUT_TRASH `
 
 
 # 配置说明
@@ -392,6 +398,8 @@ MYSQL、Influxdb 1x、CK
 | Script       | 脚本内容            |                                              |
 | outLogFileURL       | 控制台输出内容到指定的日志文件 |                                              |
 
+
+### 样本
 ```shell
 <Node id="EXECUTE_SHELL_01"  type="EXECUTE_SHELL" desc="节点1"  _fileURL="d:/test1.bat" outLogFileURL="d:/test1_log.txt">
     <Script><![CDATA[
@@ -401,7 +409,27 @@ MYSQL、Influxdb 1x、CK
   </Node>
 ```
 
+## 节点CSV_READER
+`输入节点-读取CSV文件节点`
 
+
+| 属性         | 说明                         | 适合                       |
+|---|----------------------------|--------------------------|
+| id         | 唯一标示                       ||
+| type       | CSV_READER                 |                          |
+| fileURL       | CSV文件位置                    |                          |
+| fetchSize       | 每次读取到内存中的批量数               | 如：可配合influxdb中每次批量提交的记录数 |
+| startRow       | 从第几行开始读数据,默认0代表第1行         | 一般0是第一行列名称               |
+| fields       | 定义输出的字段名称，多个字段间用分号分隔       | field1;field2;field3     |
+| fieldsIndex       | 定义输出的列，默认0代表第1列，多个字段间用分号分隔 | "2;3;4"                  |
+
+### 样本
+
+```shell
+  <Node id="CSV_READER_01"   type="CSV_READER" desc="输入节点1" fetchSize="5"  fileURL="d:/demo2.csv" startRow="1" fields="field1;field2;field3"  fieldsIndex="0;3;4">
+  </Node>
+
+```
 
 
 ## 元数据Metadata
