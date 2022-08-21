@@ -7,7 +7,7 @@ Data exchange
 
 [下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0)
 
-`当前版本最后编译时间20220818`
+`当前版本最后编译时间20220821`
 
 
 #  功能特性
@@ -421,7 +421,7 @@ MYSQL、Influxdb 1x、CK
 | fetchSize       | 每次读取到内存中的批量数               | 如：可配合influxdb中每次批量提交的记录数 |
 | startRow       | 从第几行开始读数据,默认0代表第1行         | 一般0是第一行列名称               |
 | fields       | 定义输出的字段名称，多个字段间用分号分隔       | field1;field2;field3     |
-| fieldsIndex       | 定义输出的列，默认0代表第1列，多个字段间用分号分隔 | "2;3;4"                  |
+| fieldsIndex       | 定义输出的列，默认0代表第1列，多个字段间用分号分隔；配置成-1代表按顺序读取所有字段 | "2;3;4"                  |
 
 ### 样本
 
