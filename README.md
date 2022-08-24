@@ -507,7 +507,7 @@ run_graph -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上�
 配置文件中`${arg2}` 会在服务运行时通过命令行参数arg2的值 `上海` 被替换掉
 
 # 支持解析嵌入go语言
-可以在任意一个输出节点的 <BeforeOut></BeforeOut> 标签内嵌入自己的业务逻辑
+可以在任意一个输出节点的 `<BeforeOut></BeforeOut>` 标签内嵌入自己的业务逻辑
 
 - ### 增加字段
 `可以增加多个字段，并赋予默认值`
