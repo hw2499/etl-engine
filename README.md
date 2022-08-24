@@ -553,6 +553,125 @@ func RunScript(dataValue string) (result string, topErr error) {
 }
 
 ```
+- ### 完整样本
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph>
+ 
+  <Node id="CSV_READER_01"   type="CSV_READER" desc="输入节点1" fetchSize="500"  fileURL="d:/demo.csv" startRow="1" fields="field1;field2;field3;field4"  fieldsIndex="0;1;2;3"  >
+  </Node>
+ 
+    <Node id="OUTPUT_TRASH_01"   type="OUTPUT_TRASH" desc="节点2"  >
+        <BeforeOut>
+            <![CDATA[
+package ext
+import (
+	"errors"
+	"fmt"
+	"strconv"
+	"strings"
+	"time"
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
+	"etl-engine/etl/tool/extlibs/common"
+	"io/ioutil"
+	"os"
+)
+func RunScript(dataValue string) (result string, topErr error) {
+	defer func() {
+		if topLevelErr := recover(); topLevelErr != nil {
+			topErr = errors.New("RunScript 捕获致命错误" + topLevelErr.(error).Error())
+		} else {
+			topErr = nil
+		}
+	}()
+	newRows := ""
+	GenLine(dataValue,"db1","autogen","t13","field2","field3;field4")
+	return newRows, nil
+}
+
+//接收的是JSON
+func GenLine(dataValue string, db string, rp string, measurement string, fields string, tags string) error {
+	head := "# DML\n# CONTEXT-DATABASE: " + db + "\n# CONTEXT-RETENTION-POLICY: " + rp + "\n\n"
+	line := ""
+    fieldLine := ""
+    tagLine := ""
+	_t_ := strings.Split(tags, ";")
+	_f_ := strings.Split(fields, ";")
+	rows := gjson.Get(dataValue, "rows")
+	for _, row := range rows.Array() {
+        fieldLine = ""
+        tagLine = ""
+		for i1 := 0; i1 < len(_t_); i1++ {
+			tagValue := gjson.Get(row.String(), _t_[i1])
+			tagLine = tagLine + _t_[i1] + "=\"" + tagValue.String() + "\","
+		}
+		tagLine = tagLine[0 : len(tagLine)-1]
+		for i1 := 0; i1 < len(_f_); i1++ {
+			fieldValue := gjson.Get(row.String(), _f_[i1])
+			fieldLine = fieldLine + _f_[i1] + "=" + fieldValue.String() + ","
+		}
+		fieldLine = fieldLine[0 : len(fieldLine)-1]
+
+		if len(tagLine) > 0 && len(fieldLine) > 0 {
+		    line = line + measurement + "," + tagLine + " " + fieldLine + " " + strconv.FormatInt(time.Now().Add(500*time.Millisecond).UnixNano(), 10) + "\n"
+        } else {
+            
+            if len(fieldLine) > 0 {
+                line = line + measurement + "," + fieldLine + " " + strconv.FormatInt(time.Now().Add(500*time.Millisecond).UnixNano(), 10) + "\n"
+            }
+        }
+
+	}
+
+	if len(line) > 0 {
+		txt := head + line
+		fileName := "d:/"+strconv.FormatInt(time.Now().UnixNano(), 10)
+		WriteFileToDB(fileName, txt)
+		err1 := os.Remove(fileName)
+			if err1 != nil {
+				fmt.Println("删除临时文件失败：", fileName)
+				return err1
+			}
+	}
+	return nil
+}
+func WriteFileToDB(fileName string, txt string) {
+
+	buf := []byte(txt)
+	err := ioutil.WriteFile(fileName, buf, 0666)
+	if err != nil {
+		fmt.Println("写入文件失败：", err)
+		return
+	} else {
+		cmdLine := "D:/software/influxdb-1.8.10-1/influx.exe  -import -path=" + fileName + " -host 127.0.0.1 -port 58086 -username u1 -password 123456 -precision=ns"
+		//fmt.Println("cmdLine:",cmdLine)
+		common.Command3("GB18030", "cmd", "/c", cmdLine)
+
+	}
+}
+
+              ]]>
+        </BeforeOut>
+
+    </Node>
+    
+  <Line id="LINE_01" type="STANDARD" from="CSV_READER_01" to="OUTPUT_TRASH_01" order="0" metadata="METADATA_03">线标注</Line>
+    <Metadata id="METADATA_03">
+        <Field name="field1" type="string" default="-1" nullable="false"/>
+        <Field name="field2" type="string" default="-1" nullable="false"/>
+        <Field name="field3" type="string" default="-1" nullable="false"/>
+        <Field name="field4" type="string" default="-1" nullable="false"/>
+    </Metadata>
+   
+</Graph>
+
+
+```
+
+
+
+
 
 # 合作模式
 <details><summary>欢迎对接合作</summary>
