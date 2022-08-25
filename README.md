@@ -271,8 +271,8 @@ MYSQL、Influxdb 1x、CK
 
 
 ## 节点MQ_CONSUMER
-`输入节点`
-### mq消费者 （目前支持rocketmq、kafka）
+`输入节点，阻塞模式`
+### mq消费者 （支持rocketmq）
 
 | 属性         | 说明                             | 适合           |
 |------------|--------------------------------|--------------|
@@ -290,9 +290,30 @@ MYSQL、Influxdb 1x、CK
     <Node id="MQ_CONSUMER_02" type="MQ_CONSUMER" flag="ROCKETMQ" nameServer="127.0.0.1:8080" group="group_1" topic="out_event_user_info" tag="*"></Node>
 ```
 
+### mq消息者 （支持kafka）
+
+| 属性         | 说明                        | 适合      |
+|------------|---------------------------|---------|
+| id         | 唯一标示                      ||
+| type       | MQ_CONSUMER               |         |
+| flag       | 默认值：KAFKA                 | 支持kafka |
+| nameServer | mq服务器地址，格式：127.0.0.1:8080 |         |
+| group      | mq组名称                     |         |
+| topic      | 订阅主题名称                    |         |
+| ListenerFlag        | 1是按分区进行监听 ; 2是按单通道进行监听,topic可以是多个|         |
+
+### 样本
+```shell
+ <Node id="MQ_CONSUMER_03" type="MQ_CONSUMER" flag="KAFKA" nameServer="127.0.0.1:18081" group="group_10" topic="out_event_user_info" listenerFlag="2"></Node>
+
+```
+
+
+
+
 ## 节点MQ_PRODUCER
 `输出节点`
-### mq生产者 （目前支持rocketmq、kafka）
+### mq生产者 （支持rocketmq）
 
 | 属性         | 说明                        | 适合           |
 |------------|---------------------------|--------------|
@@ -311,6 +332,28 @@ MYSQL、Influxdb 1x、CK
 ```shell
     <Node id="MQ_PRODUCER_01" type="MQ_PRODUCER" flag="ROCKETMQ" nameServer="127.0.0.1:8080" group="group_11" topic="out_event_system_user" tag="tag_1"
           sendFlag="3" outputFields="time;tag_1;c2"  renameOutputFields="时间;设备;指标" >
+    </Node>
+```
+
+### mq生产者 （支持kafka）
+
+| 属性         | 说明                                                     | 适合      |
+|------------|--------------------------------------------------------|---------|
+| id         | 唯一标示                                                   ||
+| type       | MQ_PRODUCER                                            |         |
+| flag       | 默认值：KAFKA                                              | 支持kafka |
+| nameServer | mq服务器地址，格式：127.0.0.1:8080                              |         |
+| topic      | 订阅主题名称                                                 |         |
+| isPartition        | true代表指定分区发消息;false代表随机分区发消息                           |         |
+| sendFlag        | 发送模式,1是同步；2是异步                                   |         |
+|outputFields| 输入节点传递过来的字段名称，<br/>格式：field1;field2;field3 多个字段之间用分号分隔 |
+| renameOutputFields         | 字段映射关系，格式：field1;field2;field3  多个字段之间用分号分隔            |
+
+### 样本
+```shell
+
+     <Node id="MQ_PRODUCER_02" type="MQ_PRODUCER" flag="KAFKA" nameServer="127.0.0.1:18081"  topic="out_event_system_user"
+          sendFlag="1" outputFields="Offset;Partition;Topic;Value"  renameOutputFields="Offset;Partition;Topic;Value" >
     </Node>
 ```
 
