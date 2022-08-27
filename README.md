@@ -90,6 +90,7 @@ Data exchange
   <Connection id="CONNECT_02" dbURL="http://127.0.0.1:58086" database="db1" username="user1" password="******" token=" " org="hw"  type="INFLUXDB_V1"/>
  <!--    <Connection id="CONNECT_04" dbURL="127.0.0.1:19000" database="db1" username="user1" password="******" type="CLICKHOUSE"/>-->
   <!--    <Connection id="CONNECT_03" dbURL="127.0.0.1:3306" database="db1" username="user1" password="******" type="MYSQL"/>-->
+  <!--        <Connection id="CONNECT_03"  database="d:/sqlite_db1.db"  batchSize="10000" type="SQLITE"/>-->
 </Graph>
 ```
 
@@ -219,7 +220,7 @@ MYSQL、Influxdb 1x、CK、sqlite
 | id          | 唯一标示                       ||
 | type         | 类型, DB_OUTPUT_TABLE        ||
 |sqlScript| insert、delete、update SQL语句 |ck,mysql,sqlite|
-| batchSize       | 每次批提交的记录数                  | ck,mysql <br/>注意influx以输入时的fetchSize为批提交的大小 |
+| batchSize       | 每次批提交的记录数                  | ck,mysql,sqlite <br/>注意influx以输入时的fetchSize为批提交的大小 |
 | outputFields    | 输入节点读数据时传递过来的字段名称          | influx,ck,mysql,sqlite                         |
 | renameOutputFields    | 输出节点到目标数据源的字段名称            | influx,ck,mysql,sqlite                         |
 | dbConnection | 数据源ID                      ||
