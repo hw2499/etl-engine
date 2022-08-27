@@ -7,12 +7,12 @@ Data exchange
 
 [下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0)
 
-`当前版本最后编译时间20220823`
+`当前版本最后编译时间20220827`
 
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
-- 输入输出数据源支持influxdb v1、clickhouse、mysql、rocketmq、kafka、redis、excel
+- 输入输出数据源支持influxdb v1、clickhouse、mysql、sqlite、rocketmq、kafka、redis、excel
 - 任意一个输入节点可以同任意一个输出节点进行组合，遵循pipeline模型。
 - 为满足业务场景需要，支持配置文件中使用全局变量，实现动态更新配置文件功能。
 - 任意一个输出节点都可以嵌入go语言脚本并进行解析，实现对输出数据流的格式转换功能。
@@ -182,7 +182,7 @@ Data exchange
 
 
 ### 支持源类型
-MYSQL、Influxdb 1x、CK
+MYSQL、Influxdb 1x、CK、sqlite
 
 ### 样本
 ```sh
@@ -218,10 +218,10 @@ MYSQL、Influxdb 1x、CK
 |--------------|----------------------------|-----------------------------------------|
 | id          | 唯一标示                       ||
 | type         | 类型, DB_OUTPUT_TABLE        ||
-|sqlScript| insert、delete、update SQL语句 |ck,mysql|
+|sqlScript| insert、delete、update SQL语句 |ck,mysql,sqlite|
 | batchSize       | 每次批提交的记录数                  | ck,mysql <br/>注意influx以输入时的fetchSize为批提交的大小 |
-| outputFields    | 输入节点读数据时传递过来的字段名称          | influx,ck,mysql                         |
-| renameOutputFields    | 输出节点到目标数据源的字段名称            | influx,ck,mysql                         |
+| outputFields    | 输入节点读数据时传递过来的字段名称          | influx,ck,mysql,sqlite                         |
+| renameOutputFields    | 输出节点到目标数据源的字段名称            | influx,ck,mysql,sqlite                         |
 | dbConnection | 数据源ID                      ||
 | desc         | 描述                         ||
 |outputTags| 输入节点读数据时传递过来的标签名称          | influx                                  |
@@ -496,9 +496,9 @@ MYSQL、Influxdb 1x、CK
 | 属性   | 说明       | 适合                 |
 |---|----------|--------------------|
 | id   | 唯一标示     |  |
-| type   | 数据源类型    |INFLUXDB_V1、MYSQL、CLICKHOUSE|
+| type   | 数据源类型    |INFLUXDB_V1、MYSQL、CLICKHOUSE、SQLITE|
 | dbURL | 连接地址     | ck,mysql,influx    |
-| database   | 数据库名称    | ck,mysql,influx    |
+| database   | 数据库名称    | ck,mysql,influx,sqlite    |
 | username   | 用户名称     | ck,mysql,influx    |
 | password   | 密码       | ck,mysql,influx    |
 | token   | token名称  | influx 2x          |
