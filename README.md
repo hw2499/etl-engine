@@ -26,10 +26,10 @@ Data exchange
 
 - 输入输出任意组合 
 
-![输入输出](https://i.postimg.cc/gcRbt0vt/input-output.png)
+![输入输出](https://i.postimg.cc/yxYHLv3y/input-output.png)
 - 解析嵌入脚本语言 方便格式转换 
 
-![支持嵌入脚本语言](https://i.postimg.cc/908jKZG5/script.png)
+![支持嵌入脚本语言](https://i.postimg.cc/gJM5nn6d/script.png)
 - 数据流复制 方便多路输出 
 
 ![数据流复制](https://i.postimg.cc/9FY9RMc3/copy-stream.png)
@@ -273,6 +273,43 @@ MYSQL、Influxdb 1x、CK
   <Node id="XLS_WRITER_01"   type="XLS_WRITER" desc="输出节点2" appendRow="true"  fileURL="d:/demo/test2.xlsx" startRow="3" metadataRow="2" sheetName="人员信息" outputFields="c1;c3;tag_1"  renameOutputFields="指标=B;年度=C;地区=D"  >
     </Node>
 ```
+
+
+##节点DB_EXECUTE_TABLE
+`输入节点`
+### 执行insert ,delete ,update语句
+
+| 属性        | 说明                          | 适合                             |
+|-----------|-----------------------------|--------------------------------|
+| id    | 唯一标示       ||
+| roolback  | 是否回滚                        | false不回滚，true回滚                |
+| sqlScript | delete、update语句，多条语句之间用分号分隔 | mysql，ck(不支持delete,update)     |
+| fileURL   | 外部文件                        | fileURL优先级别高于sqlScript,两个只能用一个 |
+
+
+
+### 样本
+```sh
+ <Node id="DB_EXECUTE_01" dbConnection="CONNECT_01" type="DB_EXECUTE_TABLE" desc="节点1" rollback="false" >
+    <Script name="sqlScript"><![CDATA[
+		         insert into t_1 (uuid,name) values (13,'aaa');
+		         insert into t_1 (uuid,name) values (14,'bbb');
+		         insert into t_1 (uuid,name) values (15,'ccc');
+		         insert into t_1 (uuid,name) values (1,'aaa')
+]]></Script>
+```
+
+
+## 节点OUTPUT_TRASH
+`输出节点`
+### 空管道，没有任何输出，适用于作为没有任何输出的节点所连接的目标节点（比如：DB_EXECUTE_TABLE节点）
+
+### 样本
+```sh
+  <Node id="OUTPUT_TRASH_01"   type="OUTPUT_TRASH" desc="节点2"  >
+      </Node>
+```
+
 
 
 ## 节点MQ_CONSUMER
