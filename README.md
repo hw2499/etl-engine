@@ -275,7 +275,7 @@ MYSQL、Influxdb 1x、CK
 ```
 
 
-##节点DB_EXECUTE_TABLE
+## 节点DB_EXECUTE_TABLE
 `输入节点`
 ### 执行insert ,delete ,update语句
 
@@ -528,7 +528,7 @@ MYSQL、Influxdb 1x、CK
 | id    | 唯一标示       ||
 | field |            |                                                  |
 | name  | 输出数据源的字段名称 | renameOutputFields,<br/>renameOutputTags         |
-| type  | 输出数据源的字段类型 | string,int,int32,float,<br/>str_timestamp,decimal |
+| type  | 输出数据源的字段类型 | string,int,int32,float,<br/>str_timestamp,decimal,<br/>datetime,timestamp  |
 | default | 默认值        | 当nullable为false时，如果输出值为空字符串，则可以通过default来指定输出的默认值 |
 | nullable| 是否允许为空     | false不允许为空，必须和default配合使用。true允许为空。             |
 
