@@ -283,7 +283,7 @@ MYSQL、Influxdb 1x、CK
 |-----------|-----------------------------|--------------------------------|
 | id    | 唯一标示       ||
 | roolback  | 是否回滚                        | false不回滚，true回滚                |
-| sqlScript | delete、update语句，多条语句之间用分号分隔 | mysql，ck(不支持delete,update)     |
+| sqlScript | delete、update语句，多条语句之间用分号分隔 | mysql，sqlite，ck(不支持delete,update)     |
 | fileURL   | 外部文件                        | fileURL优先级别高于sqlScript,两个只能用一个 |
 
 
