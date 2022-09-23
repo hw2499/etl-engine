@@ -9,6 +9,10 @@ Data exchange
 
 `当前版本最后编译时间20220827`
 
+`etl-engine设计器支持OEM发行`
+
+[播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
+
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
@@ -258,7 +262,7 @@ MYSQL、Influxdb 1x、CK
 | 属性           | 说明                                                |
 |--------------|---------------------------------------------------|
 | id          | 唯一标示                                              |
-| type         | 类型, XLS_WRITER                                    |
+| type         |  XLS_WRITER                                    |
 | fileURL       | 文件路径+文件名称                                         |
 | startRow    | 从第几行开始读取  如：数字2代表是第2行 开始写数据                       |
 | sheetName | 表名称                                               |
@@ -282,6 +286,7 @@ MYSQL、Influxdb 1x、CK
 | 属性        | 说明                          | 适合                             |
 |-----------|-----------------------------|--------------------------------|
 | id    | 唯一标示       ||
+| type         | DB_EXECUTE_TABLE                                    |
 | roolback  | 是否回滚                        | false不回滚，true回滚                |
 | sqlScript | delete、update语句，多条语句之间用分号分隔 | mysql，sqlite，ck(不支持delete,update)     |
 | fileURL   | 外部文件                        | fileURL优先级别高于sqlScript,两个只能用一个 |
@@ -342,7 +347,7 @@ MYSQL、Influxdb 1x、CK
 | nameServer | mq服务器地址，格式：127.0.0.1:8080 |         |
 | group      | mq组名称                     |         |
 | topic      | 订阅主题名称                    |         |
-| ListenerFlag        | 1是按分区进行监听 ; 2是按单通道进行监听,topic可以是多个|         |
+| listenerFlag        | 1是按分区进行监听 ; 2是按单通道进行监听,topic可以是多个|         |
 
 ### 样本
 ```shell
