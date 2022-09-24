@@ -210,13 +210,14 @@ MYSQL、Influxdb 1x、CK、sqlite
 | id          | 唯一标示                                                          |
 | type         | 类型, XLS_READER                                                |
 | fileURL       | 文件路径+文件名称                                                     |
-| startRow    | 从第几行开始读取                                                      |
+| startRow    | 从第几行开始读取，第1行索引是0（通常是列标题）                           |
 | sheetName | 表名称                                                           |
+| maxRow    | 最多读几行,*代表全部，10代表读取10行                   |
 | fieldMap         | 字段映射关系，格式：field1=A;field2=B;field3=C<br/>字段名称=第几列 多个字段之间用分号分隔 |
 
 ### 样本
 ```shell
-  <Node id="XLS_READER_01"   type="XLS_READER" desc="输入节点1"  fileURL="d:/demo/test1.xlsx" startRow="2" sheetName="人员信息" fieldMap="field1=1;field2=2;field3=3">
+  <Node id="XLS_READER_01"   type="XLS_READER" desc="输入节点1"  fileURL="d:/demo/test1.xlsx" startRow="2" sheetName="人员信息" fieldMap="field1=A;field2=B;field3=C">
   </Node>
 ```
 
