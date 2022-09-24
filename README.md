@@ -635,9 +635,9 @@ func RunScript(dataValue string) (result string, topErr error) {
 	newRows := ""
 	rows := gjson.Get(dataValue, "rows")
 	for index, row := range rows.Array() {
-		area := gjson.Get(tmpStr,"tag_1").String()
-		year := gjson.Get(tmpStr,"c3").String()
-		tmpStr, _ = sjson.Set(tmpStr, "tag_1", area + "_" + year)
+		area := gjson.Get(row.String(),"tag_1").String()
+		year := gjson.Get(row.String(),"c3").String()
+		tmpStr, _ := sjson.Set(row.String(), "tag_1", area + "_" + year)
 		newRows, _ = sjson.SetRaw(newRows, "rows.-1", tmpStr)
 	}
 	return newRows, nil
