@@ -240,7 +240,7 @@ MYSQL、Influxdb 1x、CK、sqlite
 |measurement| 表名称                        | influx                                  |
 
 ## 支持目标类型
-MYSQL、Influxdb 1x、CK
+MYSQL、Influxdb 1x、CK、sqlite
 
 
 ### 样本
