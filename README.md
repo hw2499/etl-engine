@@ -13,6 +13,8 @@ Data exchange
 
 [播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
 
+[演示地址](https://hw2499.github.io/etldesigner/)
+
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
