@@ -4,16 +4,19 @@ Data exchange
 
 `数据中台必备，架构师利器`
 
+- etl-engine下载地址
 
 [下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0)
 
 `当前版本最后编译时间20220827`
 
-`etl-engine设计器支持OEM发行`
+- etl-designer设计器在线使用及视频播放地址
 
-[播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
+`etl-designer设计器支持OEM发行`
 
-[演示地址](https://hw2499.github.io/etldesigner/)
+[视频播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
+
+[在线使用地址](https://hw2499.github.io/etldesigner/)
 
 
 #  功能特性
