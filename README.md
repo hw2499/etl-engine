@@ -66,7 +66,21 @@
 
 ![集成方案](https://i.postimg.cc/qqHT8sN4/crontab.png)
 
+- etl-designer设计器 
 
+![etl-designer设计器](https://i.postimg.cc/XYQg2fB2/etldesigner.png)
+
+- 调度设计器 
+
+![调度设计器](https://i.postimg.cc/j2DV5q0T/run-crontab.png)
+
+- 调度日志 
+
+![调度日志](https://i.postimg.cc/cHrZKBwP/joblist.png)
+
+- Etl日志明细 
+
+![Etl日志明细](https://i.postimg.cc/4xq1kJwt/etllogs.png)
 
 # 使用方式
 ## window平台
