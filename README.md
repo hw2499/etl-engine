@@ -25,6 +25,9 @@
 
 [在线使用地址](https://hw2499.github.io/etldesigner/)
 
+- **调度设计器视频播放地址**
+
+[视频播放地址](https://www.zhihu.com/zvideo/1568881056832462848?playTime=0.0)
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
