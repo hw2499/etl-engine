@@ -31,7 +31,7 @@
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
-- 输入输出数据源支持influxdb v1、clickhouse、mysql、sqlite、rocketmq、kafka、redis、excel
+- 输入输出数据源支持influxdb v1、clickhouse、prometheus、mysql、sqlite、rocketmq、kafka、redis、excel
 - 任意一个输入节点可以同任意一个输出节点进行组合，遵循pipeline模型。
 - 为满足业务场景需要，支持配置文件中使用全局变量，实现动态更新配置文件功能。
 - 任意一个输出节点都可以嵌入go语言脚本并进行解析，实现对输出数据流的格式转换功能。
@@ -161,48 +161,19 @@
 `输入节点-执行系统脚本节点`
 ## CSV_READER
 `输入节点-读取CSV文件节点`
+## PROMETHEUS_API_READER
+`输入节点-读PROMETHEUS节点`
+## PROMETHEUS_EXPORTER
+`输入节点-PROMETHEUS EXPORTER节点`
+## PROMETHEUS_API_WRITER
+`输出节点-写PROMETHEUS节点`
 
 ## 组合方式
-- `DB_INPUT_TABLE -> DB_OUT_TABLE `
-- `DB_INPUT_TABLE -> XLS_WRITER `
-- `DB_INPUT_TABLE -> MQ_PRODUCER `
-- `DB_INPUT_TABLE -> REDIS_WRITER `
-- `XLS_READER -> DB_OUT_TABLE `
-- `XLS_READER -> XLS_WRITER `
-- `XLS_READER -> MQ_PRODUCER `
-- `XLS_READER -> REDIS_WRITER `
-- `DB_EXECUTE_TABLE -> OUTPUT_TRASH `
-- `DB_EXECUTE_TABLE -> DB_OUT_TABLE `
-- `DB_EXECUTE_TABLE -> XLS_WRITER`
-- `DB_EXECUTE_TABLE -> MQ_PRODUCER`
-- `DB_EXECUTE_TABLE -> REDIS_WRITER`
-- `MQ_CONSUMER -> DB_OUT_TABLE`
-- `MQ_CONSUMER -> XLS_WRITER`
-- `MQ_CONSUMER -> MQ_PRODUCER`
-- `MQ_CONSUMER -> REDIS_WRITER`
-- `DB_INPUT_TABLE -> COPY_STREAM `
-- `XLS_READER -> COPY_STREAM `
-- `MQ_CONSUMER -> COPY_STREAM `
-- `REDIS_READER -> COPY_STREAM `
-- `COPY_STREAM -> DB_OUT_TABLE `
-- `COPY_STREAM -> XLS_WRITER `
-- `COPY_STREAM -> MQ_PRODUCER `
-- `COPY_STREAM -> REDIS_WRITE `
-- `REDIS_READER -> DB_OUT_TABLE `
-- `REDIS_READER -> XLS_WRITER `
-- `REDIS_READER -> MQ_PRODUCER `
-- `REDIS_READER -> REDIS_WRITER `
-- `CUSTOM_READER_WRITER -> OUTPUT_TRASH `
-- `EXECUTE_SHELL -> DB_OUT_TABLE `
-- `EXECUTE_SHELL -> XLS_WRITER `
-- `EXECUTE_SHELL -> MQ_PRODUCER `
-- `EXECUTE_SHELL -> REDIS_WRITER `
-- `EXECUTE_SHELL -> OUTPUT_TRASH `
-- `CSV_READER -> DB_OUT_TABLE `
-- `CSV_READER -> XLS_WRITER `
-- `CSV_READER -> MQ_PRODUCER `
-- `CSV_READER -> REDIS_WRITER `
-- `CSV_READER -> OUTPUT_TRASH `
+`任意一个输入节点都可以连接到任意一个输出节点`
+`任意一个输入节点都可以连接到一个拷贝节点`
+`一个拷贝节点可以连接到多个输出节点`
+`任意一个输入节点都可以连接到一个转换节点`
+`拷贝节点不允许连接转换节点`
 
 
 # 配置说明
@@ -549,6 +520,97 @@ MYSQL、Influxdb 1x、CK、sqlite
   <Node id="CSV_READER_01"   type="CSV_READER" desc="输入节点1" fetchSize="5"  fileURL="d:/demo2.csv" startRow="1" fields="field1;field2;field3"  fieldsIndex="0;3;4">
   </Node>
 
+```
+
+## PROMETHEUS_API_READER
+`输入节点-读PROMETHEUS节点`
+
+| 属性     | 说明                    | 适合                      |
+|--------|-----------------------|-------------------------|
+| id     | 唯一标示                  ||
+| type   | PROMETHEUS_API_READER |                         |
+| url    | prometheus服务器地址       | 如：http://127.0.0.1:9090 |
+| Script | 查询API内容，只支持/api/v1/query <br/>和 /api/v1/query_range           | 如：/api/v1/query?query=my_device_info{deviceCode="设备编码000"}[1d]|
+
+**注意：查询返回的结果集中，__name__是度量名称；__TIME__是prometheus入库时的时间戳；__VALUE__是prometheus的value**
+
+```shell
+    <Node id="PROMETHEUS_API_READER_1" type="PROMETHEUS_API_READER"  url="http://127.0.0.1:9090" >
+        <Script name="sqlScript">
+            <![CDATA[
+            /api/v1/query?query=my_device_info{deviceCode="设备编码000"}[1d]
+            ]]>
+		</Script>
+    </Node>
+     <Node id="DB_OUTPUT_TABLE_1" type="DB_OUTPUT_TABLE" batchSize="10" dbConnection="CONNECT_1" desc="" outputFields="__name__;address;deviceCode;__TIME__;__VALUE__" renameOutputFields="f1;f2;f3;f4;f5"  >
+        <Script name="sqlScript">
+            <![CDATA[insert into 
+t_prome_info_bk
+(f1,f2,f3,f4,f5)
+values (?,?,?,?,?)]]>
+        </Script>
+```
+
+
+## PROMETHEUS_EXPORTER
+`输入节点-PROMETHEUS EXPORTER节点`
+
+| 属性     | 说明                  | 适合                    |
+|--------|---------------------|-----------------------|
+| id     | 唯一标示                ||
+| type   | PROMETHEUS_EXPORTER |                       |
+| exporterAddr    | exporter地址, IP:PORT | 如：  :10000            |
+| exporterMetricsPath    | exporter路径,         | 如：/EtlEngineExport    |
+| metricName    | 度量名称                | 如：Etl_Engine_Exporter |
+| metricHelp    | 度量描述                | 如：样本                  |
+| labels    | 标签名称                | 如：deviceCode;address;desc                  |
+
+```shell
+    <Node id="PROMETHEUS_EXPORTER_1" type="PROMETHEUS_EXPORTER"  
+	    exporterAddr=":10000" exporterMetricsPath="/EtlEngineExport" 
+	    metricName="Etl_Engine_Exporter" metricHelp="Etl_Engine_Exporter样本" 
+	    labels="deviceCode;address;desc">
+	</Node>
+```
+**注意：输出的数据流中会自动添加两个字段，__name__是度量名称，__VALUE__是prometheus的value，**
+**同时会暴露一个服务地址/pushDataService用于生成数据，postman调试细节如下：**
+```shell
+	 
+	 POST 方式
+	 URL  http://127.0.0.1:10000/pushDataService , 
+	 Body x-www-form-urlencoded
+	 参数:
+		"jsondata":{
+			"labels":{"deviceCode":"设备编码001","address":"南关区","desc":"最大值"},
+			"value":100
+		}
+```
+
+
+
+## PROMETHEUS_API_WRITER
+`输出节点-写PROMETHEUS节点`
+
+
+| 属性     | 说明                                        | 适合                      |
+|--------|-------------------------------------------|-------------------------|
+| id     | 唯一标示                                      ||
+| type   | PROMETHEUS_API_WRITER                     |                         |
+| url    | prometheus服务器地址                           | 如：http://127.0.0.1:9090 |
+| metric | 度量名称                                      | |
+| outputFields | 输入节点传递过来的字段名称                             | |
+| renameOutputFields | prometheus入库时对应的标签名称，数据项与outputFields各项对应 | |
+| valueField | prometheus入库时对应的value，数据项与输入节点中已存在的字段名称对应 | |
+
+
+```shell
+  <Node id="DB_INPUT_TABLE_1" type="DB_INPUT_TABLE" fetchSize="1000" dbConnection="CONNECT_1"  >
+        <Script name="sqlScript">
+            <![CDATA[select f2,f3,f4 from t_prome_info ]]>
+        </Script>
+    </Node>
+    <Node id="PROMETHEUS_API_WRITER_1" type="PROMETHEUS_API_WRITER" url="http://127.0.0.1:9090" metric="my_device_info" outputFields="f2;f3" renameOutputFields="deviceCode;address" valueField="f4" >
+	</Node>
 ```
 
 
