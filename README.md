@@ -572,7 +572,16 @@ values (?,?,?,?,?)]]>
 	    labels="deviceCode;address;desc">
 	</Node>
 ```
-**注意：输出的数据流中会自动添加两个字段，__name__是度量名称，__VALUE__是prometheus的value，**
+
+**prometheus配置文件增加如下内容：**
+```shell
+  - job_name: "etlengine_exporter"
+    metrics_path: "/EtlEngineExport" 
+    static_configs:
+      - targets: ["127.0.0.1:10000"]
+```
+
+
 **同时会暴露一个服务地址/pushDataService用于生成数据，postman调试细节如下：**
 ```shell
 	 
@@ -585,6 +594,8 @@ values (?,?,?,?,?)]]>
 			"value":100
 		}
 ```
+
+**输出的数据流中会自动添加两个字段，__name__是度量名称，__VALUE__是prometheus的value，**
 
 
 
