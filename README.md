@@ -13,9 +13,9 @@
 
 `当前版本最后编译时间20221109`
 
-[v1.0.1下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.1)
+[v1.0.1下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.1) 授权使用
 
-[v1.0.0下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0)
+[v1.0.0下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0) 免费使用
 
 - **etl-designer设计器在线使用及视频播放地址**
 
