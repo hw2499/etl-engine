@@ -165,7 +165,7 @@
 `输入节点-读PROMETHEUS节点`
 ## [PROMETHEUS_EXPORTER](https://github.com/hw2499/etl-engine/blob/main/README.md#prometheus_exporter-1)
 `输入节点-PROMETHEUS EXPORTER节点`
-## [PROMETHEUS_API_WRITER](https://github.com/hw2499/etl-engine/blob/main/README.md#prometheus_api_writer-1)
+## [PROMETHEUS_API_WRITER](./README.md#prometheus_api_writer-1)
 `输出节点-写PROMETHEUS节点`
 
 ## 组合方式
