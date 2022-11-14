@@ -228,7 +228,7 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 |--------------|----------------------------|-----------------------------------------|
 | id          | 唯一标示                       ||
 | type         | 类型, DB_OUTPUT_TABLE        ||
-|script| insert、delete、update SQL语句 |ck,mysql,sqlite|
+|script| insert、delete、update SQL语句 |ck,mysql,sqlite,postgre,oracle|
 | batchSize       | 每次批提交的记录数                  | ck,mysql,sqlite,postgre,oracle <br/>注意influx以输入时的fetchSize为批提交的大小 |
 | outputFields    | 输入节点读数据时传递过来的字段名称          | influx,ck,mysql,sqlite,postgre,oracle                         |
 | renameOutputFields    | 输出节点到目标数据源的字段名称            | influx,ck,mysql,sqlite,postgre,oracle                         |
