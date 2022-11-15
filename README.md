@@ -16,10 +16,10 @@
 [v1.0.2下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.2) 授权使用
 
 <details><summary>历史下载列表</summary>
+	
+- [v1.0.1下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.1) 授权使用
 
-[v1.0.1下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.1) 授权使用
-
-[v1.0.0下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0) 免费使用
+- [v1.0.0下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.0) 免费使用
 
 </details> 
 
