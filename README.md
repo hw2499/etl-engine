@@ -764,6 +764,24 @@ run_graph -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上�
    <br>格式： `_HW_uuid32`
    <br>输出32位UUID，如：D54C3C7163844E4DB4F073E8EEC83328
 
+- ### 通过命令行方式传递内置变量
+
+```shell
+run_graph -fileUrl ./global6.xml -logLevel debug arg1=_HW_YYYY-MM-DD0x32hh:mm:ss.SSS arg2=_HW_YYYY-MM-DD
+```
+
+- ### 配置文件中引用内置变量
+
+```shell
+    <Node id="DB_INPUT_01" dbConnection="CONNECT_01" type="DB_INPUT_TABLE" desc="节点1" fetchSize="500">
+     <Script name="sqlScript"><![CDATA[
+		         select * from (select * from t5 where tag_1='${arg2}' limit 1000)
+    ]]></Script>
+
+  <Node id="XLS_WRITER_01"   type="XLS_WRITER" desc="输出节点2" appendRow="true"  fileURL="${arg1}.xlsx" _fileURL="d:/demo/test2.xlsx" startRow="3" metadataRow="2" sheetName="人员信息" outputFields="c1;c3;tag_1"  renameOutputFields="指标=B;年度=C;地区=D"  >
+ 
+```
+
 # 支持解析嵌入go语言
 可以在任意一个输出节点的 `<BeforeOut></BeforeOut>` 标签内嵌入自己的业务逻辑
 
