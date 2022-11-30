@@ -11,11 +11,13 @@
 # 资源地址
 - **etl-engine下载地址**
 
-`当前版本最后编译时间20221122`
+`当前版本最后编译时间20221130`
 
-[v1.0.3下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.3) 授权使用
+ [v1.0.4下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.4) 授权使用
 
 <details><summary>历史下载列表</summary>
+
+ [v1.0.3下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.3) 授权使用
 
  [v1.0.2下载地址](https://github.com/hw2499/etl-engine/releases/tag/v1.0.2) 授权使用
 
