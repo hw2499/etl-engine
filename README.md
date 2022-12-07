@@ -44,6 +44,8 @@
 
 [视频播放地址](https://www.zhihu.com/zvideo/1568881056832462848?playTime=0.0)
 
+[使用说明](https://github.com/hw2499/etl-engine/wiki/crontab%E8%B0%83%E5%BA%A6)
+
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
 - 输入输出数据源支持influxdb v1、clickhouse、prometheus、postgresql、mysql、oracle、sqlite、rocketmq、kafka、redis、excel
