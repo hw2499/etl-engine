@@ -34,7 +34,7 @@
 
 - **etl-designer设计器在线使用及视频播放地址**
 
-`etl-designer设计器支持OEM发行（目前已经集成到[run_crontab](https://github.com/hw2499/etl-engine/wiki/crontab%E8%B0%83%E5%BA%A6)中使用）`
+`etl-designer设计器支持OEM发行`（目前已经集成到[run_crontab](https://github.com/hw2499/etl-engine/wiki/crontab%E8%B0%83%E5%BA%A6)中使用）
 
 [视频播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
 
