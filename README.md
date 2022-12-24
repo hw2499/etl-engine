@@ -33,7 +33,7 @@
 
 [视频播放地址](https://www.zhihu.com/zvideo/1568881056832462848?playTime=0.0)
 
-[run_crontab使用说明](https://github.com/hw2499/etl-engine/wiki/crontab%E8%B0%83%E5%BA%A6)
+[run_crontab使用说明](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
