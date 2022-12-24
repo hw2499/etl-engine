@@ -779,7 +779,7 @@ run_graph -fileUrl ./global6.xml -logLevel debug arg1=_HW_YYYY-MM-DD0x32hh:mm:ss
 ```
 
 # 支持解析嵌入go语言
-可以在任意一个输出节点的 `<BeforeOut></BeforeOut>` 标签内嵌入自己的业务逻辑
+可以在任意一个输出节点的 `<BeforeOut></BeforeOut>` 标签内嵌入自己的业务逻辑，[更多介绍](https://github.com/hw2499/etl-engine/wiki/%E5%B5%8C%E5%85%A5%E8%84%9A%E6%9C%AC%E5%BC%80%E5%8F%91)
 
 - ### 增加字段
 `可以增加多个字段，并赋予默认值`
