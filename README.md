@@ -344,7 +344,7 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
     <Node id="MQ_CONSUMER_02" type="MQ_CONSUMER" flag="ROCKETMQ" nameServer="127.0.0.1:8080" group="group_1" topic="out_event_user_info" tag="*"></Node>
 ```
 
-### mq消息者 （支持kafka）
+### mq消费者 （支持kafka）
 
 | 属性         | 说明                        | 适合      |
 |------------|---------------------------|---------|
