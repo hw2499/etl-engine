@@ -173,6 +173,9 @@
 `输入节点-PROMETHEUS EXPORTER节点`
 ## [PROMETHEUS_API_WRITER](./README.md#prometheus_api_writer-1)
 `输出节点-写PROMETHEUS节点`
+## HTTP_INPUT_SERVICE
+`输入节点-Http节点`
+
 
 ## 组合方式
 - `任意一个输入节点都可以连接到任意一个输出节点`
@@ -629,6 +632,45 @@ values (?,?,?,?,?)]]>
     <Node id="PROMETHEUS_API_WRITER_1" type="PROMETHEUS_API_WRITER" url="http://127.0.0.1:9090" metric="my_device_info" outputFields="f2;f3" renameOutputFields="deviceCode;address" valueField="f4" >
 	</Node>
 ```
+
+## HTTP_INPUT_SERVICE
+`输入节点-Http节点,阻塞模式`
+
+| 属性     | 说明                 | 适合  |
+|--------|--------------------|-----|
+| id     | 唯一标示               ||
+| type   | HTTP_INPUT_SERVICE |     |
+| serviceIp   | 绑定HTTP/HTTPS服务的IP  |     |
+| servicePort   | 绑定HTTP/HTTPS服务的端口      |     |
+| serviceName   | 对外暴露的服务名称          | 默认：etlEngineService |
+| serviceCertFile   | HTTPS服务证书文件位置      |     |
+| serviceKeyFile   | HTTPS服务秘钥文件位置      |     |
+
+
+```shell
+	<Node id=""
+		type="HTTP_INPUT_SERVICE"
+		serviceIp=""
+		servicePort="8081"
+		serviceName="etlEngineService"
+		serviceCertFile=""
+		serviceKeyFile="" >
+	</Node>
+	
+	
+	postman调试：
+     http://127.0.0.1:8081/etlEngineService
+	 POST 方式，URL： /etlEngineService ，Body:x-www-form-urlencoded
+	 参数：
+		"jsondata":{
+			"rows":[
+				{"deviceCode":"设备编码001","address":"朝阳区","desc":"最大值","value":20},
+				{"deviceCode":"设备编码002","address":"朝阳区","desc":"最大值","value":18}
+			]
+		}
+     注意：必须传递KEY为rows的数组结构
+```
+
 
 
 ## 元数据Metadata
