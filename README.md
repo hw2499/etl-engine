@@ -73,7 +73,7 @@
 
 - etl_crontab与etl_engine灵活组合 
 
-![集成方案](https://i.postimg.cc/qqHT8sN4/crontab.png)
+![集成方案](https://i.postimg.cc/0Q6CsFvd/crontab.png)
 
 - etl-designer设计器 
 
