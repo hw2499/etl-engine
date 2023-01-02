@@ -71,7 +71,7 @@
 # 调度集成方案
 
 
-- run_crontab与run_graph灵活组合 
+- etl_crontab与etl_engine灵活组合 
 
 ![集成方案](https://i.postimg.cc/qqHT8sN4/crontab.png)
 
