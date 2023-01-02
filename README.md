@@ -23,7 +23,7 @@
 
 - **etl-designer设计器在线使用及视频播放地址**
 
-`etl-designer设计器支持OEM发行`（目前已经集成到[run_crontab](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)中使用）
+`etl-designer设计器支持OEM发行`（目前已经集成到[etl_crontab](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)中使用）
 
 [视频播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
 
@@ -33,7 +33,7 @@
 
 [视频播放地址](https://www.zhihu.com/zvideo/1568881056832462848?playTime=0.0)
 
-[run_crontab使用说明](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)
+[etl_crontab使用说明](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
@@ -94,13 +94,13 @@
 # 使用方式
 ## window平台
 ```sh
-  run_graph.exe -fileUrl .\graph.xml -logLevel info 
+  etl_engine.exe -fileUrl .\graph.xml -logLevel info 
  
 ```
 ## linux平台
 ```sh
   
-  run_graph -fileUrl .\graph.xml -logLevel info 
+  etl_engine -fileUrl .\graph.xml -logLevel info 
 
 ```
 # 配置文件样例
@@ -729,7 +729,7 @@ values (?,?,?,?,?)]]>
 ### 通过命令行方式传递全局变量
 
 ```shell
-run_graph -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上海
+etl_engine -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上海
 ```
 其中 `arg1`和`arg2`是从命令行传递进来的全局变量
 
@@ -805,7 +805,7 @@ run_graph -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上�
 - ### 通过命令行方式传递内置变量
 
 ```shell
-run_graph -fileUrl ./global6.xml -logLevel debug arg1=_HW_YYYY-MM-DD0x32hh:mm:ss.SSS arg2=_HW_YYYY-MM-DD
+etl_engine -fileUrl ./global6.xml -logLevel debug arg1=_HW_YYYY-MM-DD0x32hh:mm:ss.SSS arg2=_HW_YYYY-MM-DD
 ```
 
 - ### 配置文件中引用内置变量
