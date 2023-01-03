@@ -27,7 +27,6 @@
 
 [视频播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
 
-[在线演示地址](https://hw2499.github.io/etldesigner/)
 
 - **crontab调度设计器视频播放地址**
 
