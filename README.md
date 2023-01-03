@@ -21,7 +21,7 @@
 [下载地址](https://github.com/hw2499/etl-engine/releases)
 
 
-- **etl-designer设计器在线使用及视频播放地址**
+- **etl-designer设计器视频播放地址**
 
 `etl-designer设计器支持OEM发行`（目前已经集成到[etl_crontab](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)中使用）
 
