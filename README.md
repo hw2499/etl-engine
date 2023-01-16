@@ -8,7 +8,7 @@
 - crontab调度设计器负责按时间周期执行指定的etl任务，crontab调度还提供了查询etl任务执行日志功能，
 - 三部分组成了etl解决方案，可集成到任意使用场景。
 
-[产品详细介绍](https://pan.baidu.com/s/1fZZoym-DiB4UP9Hzz38Wxw?pwd=dnps)
+[产品详细介绍](https://pan.baidu.com/s/1TL00bs9lvi0-8zrKewFrcg?pwd=kc7a)
 
 [高可用介绍](https://pan.baidu.com/s/1xfJ25KI4KH6ZMEW3sZ5HlA?pwd=36be)
 
@@ -36,7 +36,7 @@
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
-- 输入输出数据源支持influxdb v1、clickhouse、prometheus、postgresql、mysql、oracle、sqlite、rocketmq、kafka、redis、excel
+- 输入输出数据源支持influxdb v1、clickhouse、prometheus、elastic、postgresql、mysql、oracle、sqlite、rocketmq、kafka、redis、excel
 - 任意一个输入节点可以同任意一个输出节点进行组合，遵循pipeline模型。
 - 为满足业务场景需要，支持配置文件中使用全局变量，实现动态更新配置文件功能。
 - 任意一个输出节点都可以嵌入go语言脚本并进行解析，实现对输出数据流的格式转换功能。
