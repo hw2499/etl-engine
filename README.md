@@ -174,7 +174,10 @@
 `输出节点-写PROMETHEUS节点`
 ## [HTTP_INPUT_SERVICE](./README.md#http_input_service-1)
 `输入节点-Http节点`
-
+## ELASTIC_READER
+`输入节点-读es节点`
+## ELASTIC_WRITER
+`输出节点-写es节点`
 
 ## 组合方式
 - `任意一个输入节点都可以连接到任意一个输出节点`
@@ -669,6 +672,91 @@ values (?,?,?,?,?)]]>
 		}
      注意:必须传递KEY为rows的数组结构
 ```
+
+## ELASTIC_READER
+`输入节点-读es节点`
+
+| 属性           | 说明             | 适合  |
+|--------------|----------------|-----|
+| id           | 唯一标示           ||
+| type         | ELASTIC_READER |     |
+| index        | 索引名称           |     |
+| sourceFields | 结果集中输出的字段名称    |     |
+| fetchSize    | 每次读取记录数        |     |
+| Script标签     | es查询语法         |     |
+
+### 样本
+
+```shell
+   <Node id="ELASTIC_READER_01" dbConnection="CONNECT_02"   
+	type="ELASTIC_READER" desc="节点2"  sourceFields="custom_type;username;desc;address" fetchSize="2" >
+        <Script name="sqlScript"><![CDATA[
+            {
+                  "query" : {
+                       "bool":{
+                          "must":[
+                              //{
+                                // "term": { "username.keyword": "王先生"  }
+                             //     "match": { "username": ""  }
+                             //  },
+                               {
+                                 "term":   {   "custom_type":"t_user_info"  }
+                               }
+                          ]
+            
+                       }
+                    }
+                }
+        ]]></Script>
+   </Node>
+```
+
+## ELASTIC_WRITER
+`输出节点-写es节点`
+
+
+| 属性                 | 说明                                                                                                                                                                   | 适合  |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----|
+| id                 | 唯一标示                                                                                                                                                                 ||
+| type               | ELASTIC_WRITER                                                                                                                                                       |     |
+| index              | 索引名称                                                                                                                                                                 |     |
+| idType             | 主键输出方式： 1 代表不指定id,由es系统自己生成20位GUID;<br/>2 代表由idExpress中指定输出的字段名称，从上一个节点的renameOutputFields中进行匹配相同的字段名称的值;<br/>3 代表由idExpress中指定表达式配置，_HW_UUID32 表达式 代表按32位UUID自动生成主键 |     |
+| idExpress          | 如：idType配置3；该参数配置 _HW_UUID32                                                                                                                                         |     |
+| outputFields       | 输入节点读数据时传递过来的字段名称                                                                                                                                                    |    按顺序输出字段内容，不按字段名称 |
+| renameOutputFields | 输出节点到目标数据源的字段名称                                                                                                                                                      |   按顺序输出字段内容，不按字段名称 |
+
+### 样本
+
+```shell
+  <Node id="DB_INPUT_01" dbConnection="CONNECT_01" type="DB_INPUT_TABLE" desc="节点1" fetchSize="2">
+    <Script name="sqlScript"><![CDATA[
+		        SELECT "t_user_info" AS custom_type,uname, udesc,uaddress,uid FROM t_u_info
+]]></Script>
+  </Node>
+
+    <Node id="ELASTIC_WRITER_01" dbConnection="CONNECT_02"  type="ELASTIC_WRITER" desc="节点2"  
+        outputFields="custom_type;uname;udesc;uaddress;uid" 
+        renameOutputFields="custom_type;username;desc;address;uid"
+        idType="3" 
+        idExpress="_HW_UUID32">
+      </Node>
+      
+       <Line id="LINE_01" type="STANDARD" from="DB_INPUT_01" to="ELASTIC_WRITER_01" order="0" metadata="METADATA_01"></Line>
+
+  <Metadata id="METADATA_01">
+    <Field name="custom_type" type="string" default="-1" nullable="false"/>
+    <Field name="username" type="string" default="-1" nullable="false"/>
+    <Field name="desc" type="string" default="-1" nullable="false"/>
+    <Field name="address" type="string" default="-1" nullable="false"/>
+    <Field name="uid" type="string" default="-1" nullable="false"/>
+  </Metadata>
+ 
+      
+```
+
+
+
+
 
 
 
