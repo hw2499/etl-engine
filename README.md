@@ -174,10 +174,11 @@
 `输出节点-写PROMETHEUS节点`
 ## [HTTP_INPUT_SERVICE](./README.md#http_input_service-1)
 `输入节点-Http节点`
-## ELASTIC_READER
+## [ELASTIC_READER](./README.md#elastic_reader-1)
 `输入节点-读es节点`
-## ELASTIC_WRITER
+## [ELASTIC_WRITER](./README.md#elastic_writer-1)
 `输出节点-写es节点`
+
 
 ## 组合方式
 - `任意一个输入节点都可以连接到任意一个输出节点`
@@ -249,6 +250,8 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 |renameOutputTags| 输出节点到目标数据源的标签名称            | influx                                  |
 |rp| 保留策略名称                     | influx                                  |
 |measurement| 表名称                        | influx                                  |
+|timeOffset| 时间抖动偏移量,用于批量写入时生成不可重复的时间戳<br/>(该功能通过time.Sleep实现,建议通过嵌入脚本增加一个纳秒格式的time列,或调整你的time+tags) | influx|
+
 
 ## 支持目标类型
 MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
@@ -709,6 +712,9 @@ values (?,?,?,?,?)]]>
                 }
         ]]></Script>
    </Node>
+   
+    <Connection id="CONNECT_02" type="ELASTIC" dbURL="http://127.0.0.1:9200" database="es_db3" username="elastic" password="******" />
+  
 ```
 
 ## ELASTIC_WRITER
@@ -750,7 +756,9 @@ values (?,?,?,?,?)]]>
     <Field name="address" type="string" default="-1" nullable="false"/>
     <Field name="uid" type="string" default="-1" nullable="false"/>
   </Metadata>
- 
+  
+  <Connection id="CONNECT_02" type="ELASTIC" dbURL="http://127.0.0.1:9200" database="es_db3" username="elastic" password="******" />
+  
       
 ```
 
@@ -781,11 +789,11 @@ values (?,?,?,?,?)]]>
 | 属性   | 说明       | 适合                 |
 |---|----------|--------------------|
 | id   | 唯一标示     |  |
-| type   | 数据源类型    |INFLUXDB_V1、MYSQL、CLICKHOUSE、SQLITE、POSTGRES、ORACLE|
-| dbURL | 连接地址     | ck,mysql,influx,postgre,oracle    |
-| database   | 数据库名称    | ck,mysql,influx,sqlite,postgre,oracle    |
-| username   | 用户名称     | ck,mysql,influx,postgre,oracle    |
-| password   | 密码       | ck,mysql,influx,postgre,oracle    |
+| type   | 数据源类型    |INFLUXDB_V1、MYSQL、CLICKHOUSE、SQLITE、POSTGRES、ORACLE、ELASTIC|
+| dbURL | 连接地址     | ck,mysql,influx,postgre,oracle,elastic    |
+| database   | 数据库名称    | ck,mysql,influx,sqlite,postgre,oracle,elastic    |
+| username   | 用户名称     | ck,mysql,influx,postgre,oracle,elastic    |
+| password   | 密码       | ck,mysql,influx,postgre,oracle,elastic    |
 | token   | token名称  | influx 2x          |
 | org   | 机构名称     | influx 2x          |
 | rp   | 数据保留策略名称 | influx 1x          |
