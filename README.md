@@ -686,7 +686,7 @@ values (?,?,?,?,?)]]>
 | index        | 索引名称           |     |
 | sourceFields | 结果集中输出的字段名称    |     |
 | fetchSize    | 每次读取记录数        |     |
-| Script标签     | es查询语法         |     |
+| Script标签     | DSL查询语法         |     |
 
 ### 样本
 
