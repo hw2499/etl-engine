@@ -894,8 +894,10 @@ etl_engine -fileUrl ./global6.xml -logLevel debug arg1="d:/test3.xlsx" arg2=上�
 
 
 4. UUID变量
-   <br>格式： `_HW_uuid32`
+   <br>格式： `_HW_UUID32`
    <br>输出32位UUID，如：D54C3C7163844E4DB4F073E8EEC83328
+   <br>格式： `_HW_uuid32`
+   <br>输出32位UUID，如：d54c3c7163844e4dB4f073e8eec83328
 
 - ### 通过命令行方式传递内置变量
 
