@@ -2,10 +2,10 @@
 实现从源读取数据 -> (目标数据类型转换 | 数据分发) -> 写到目标数据源 
 
 # 产品概述
-- 产品由etl-engine引擎和etl-designer云端设计器及crontab调度组成，
+- 产品由etl-engine引擎和etl-designer云端设计器及etl-crontab调度组成，
 - etl-engine引擎负责解析etl配置文件并执行etl任务，
 - etl-designer云端设计器通过拖拉拽的方式生成etl-engine引擎可识别的etl任务配置文件，
-- crontab调度设计器负责按时间周期执行指定的etl任务，crontab调度还提供了查询etl任务执行日志功能，
+- etl-crontab调度设计器负责按时间周期执行指定的etl任务，etl-crontab调度还提供了查询etl任务执行日志功能，
 - 三部分组成了etl解决方案，可集成到任意使用场景。
 
 [产品详细介绍](https://pan.baidu.com/s/1TL00bs9lvi0-8zrKewFrcg?pwd=kc7a)
@@ -28,7 +28,7 @@
 [视频播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
 
 
-- **crontab调度设计器视频播放地址**
+- **etl-crontab调度设计器视频播放地址**
 
 [视频播放地址](https://www.zhihu.com/zvideo/1568881056832462848?playTime=0.0)
 
