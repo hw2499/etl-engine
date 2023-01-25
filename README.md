@@ -76,11 +76,11 @@
 
 - etl-designer设计器 
 
-![etl-designer设计器](https://i.postimg.cc/XYQg2fB2/etldesigner.png)
+![etl-designer设计器](https://i.postimg.cc/vT4kLbcn/etldesigner1.png)
 
 - 调度设计器 
 
-![调度设计器](https://i.postimg.cc/j2DV5q0T/run-crontab.png)
+![调度设计器](https://i.postimg.cc/FHq06vWp/run-crontab1.png)
 
 - 调度日志 
 
