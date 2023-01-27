@@ -8,7 +8,7 @@
 - etl-crontab调度设计器负责按时间周期执行指定的etl任务，etl-crontab调度还提供了查询etl任务执行日志功能，
 - 三部分组成了etl解决方案，可集成到任意使用场景。
 
-[产品详细介绍](https://pan.baidu.com/s/1TL00bs9lvi0-8zrKewFrcg?pwd=kc7a)
+[产品详细介绍](https://pan.baidu.com/s/14XUTpfz3vy4Ij2X9SHvmCA?pwd=pevv)
 
 [高可用介绍](https://pan.baidu.com/s/1xfJ25KI4KH6ZMEW3sZ5HlA?pwd=36be)
 
