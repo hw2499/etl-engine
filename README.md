@@ -1,4 +1,7 @@
 # etl-engine
+[![CN doc](https://img.shields.io/badge/文档-中文版-blue.svg)](https://github.com/hw2499/etl-engine/blob/main/README.md)
+[![EN doc](https://img.shields.io/badge/document-English-blue.svg)](https://github.com/hw2499/etl-engine/wiki/etl-engine-readme-for-english)
+
 实现从源读取数据 -> (目标数据类型转换 | 数据分发) -> 写到目标数据源 
 
 # 产品概述
