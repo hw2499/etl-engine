@@ -181,6 +181,8 @@
 `输入节点-读es节点`
 ## [ELASTIC_WRITER](./README.md#elastic_writer-1)
 `输出节点-写es节点`
+## [HIVE_READER](./README.md#hive_reader-1)
+`输入节点-读hive节点`
 
 
 ## 组合方式
@@ -766,6 +768,39 @@ values (?,?,?,?,?)]]>
 ```
 
 
+##节点HIVE_READER
+`输入节点-读hive节点`
+
+###认证方式
+hive.server2.authentication = NONE 的场景
+
+
+| 属性           | 说明              |
+|--------------|-----------------|
+| id          | 唯一标示            |
+| type         | 类型, HIVE_READER        |
+| script       | sqlScript SQL语句 |
+| fetchSize    | 每次读取记录数         |
+| dbConnection | 数据源ID           |
+| desc         | 描述              |
+
+
+### 样本
+
+```shell
+    <Node id="HIVE_READER_01" dbConnection="CONNECT_01"   
+	type="HIVE_READER" desc="节点1"  fetchSize="100" >
+    <Script name="sqlScript"><![CDATA[
+		 select * from t_u_info  
+]]></Script>
+      </Node>
+      
+          <Connection id="CONNECT_01" 
+          dbURL="127.0.0.1:10000" database="db_hive_edu" 
+          username="root" password="******" 
+          batchSize="1000" type="HIVE"/>
+      
+```
 
 
 
