@@ -831,11 +831,11 @@ hive.server2.authentication = NONE 的场景
 | 属性   | 说明       | 适合                 |
 |---|----------|--------------------|
 | id   | 唯一标示     |  |
-| type   | 数据源类型    |INFLUXDB_V1、MYSQL、CLICKHOUSE、SQLITE、POSTGRES、ORACLE、ELASTIC|
-| dbURL | 连接地址     | ck,mysql,influx,postgre,oracle,elastic    |
-| database   | 数据库名称    | ck,mysql,influx,sqlite,postgre,oracle,elastic    |
-| username   | 用户名称     | ck,mysql,influx,postgre,oracle,elastic    |
-| password   | 密码       | ck,mysql,influx,postgre,oracle,elastic    |
+| type   | 数据源类型    |INFLUXDB_V1、MYSQL、CLICKHOUSE、SQLITE、POSTGRES、ORACLE、ELASTIC、HIVE|
+| dbURL | 连接地址     | ck,mysql,influx,postgre,oracle,elastic,hive    |
+| database   | 数据库名称    | ck,mysql,influx,sqlite,postgre,oracle,elastic,hive    |
+| username   | 用户名称     | ck,mysql,influx,postgre,oracle,elastic,hive    |
+| password   | 密码       | ck,mysql,influx,postgre,oracle,elastic,hive    |
 | token   | token名称  | influx 2x          |
 | org   | 机构名称     | influx 2x          |
 | rp   | 数据保留策略名称 | influx 1x          |
