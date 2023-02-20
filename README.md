@@ -771,7 +771,7 @@ values (?,?,?,?,?)]]>
 ## HIVE_READER
 `输入节点-读hive节点`
 
-###认证方式
+### 认证方式
 hive.server2.authentication = NONE 的场景
 
 
