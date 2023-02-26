@@ -787,7 +787,7 @@ hive.server2.authentication = KERBEROS
 | script        | sqlScript SQL语句                                                                               |
 | fetchSize     | 每次读取记录数                                                                                       |
 | dbConnection  | 数据源ID                                                                                         |
-| authFlag      | 认证类型：NONE 或 KERBEROS                                                                          |
+| authFlag      | 认证类型：NONE 或 KERBEROS ,默认是NONE                                                                         |
 | krb5Principal | kerberos用户名称，如：hive.server2.authentication.kerberos.principal = hive/_HOST@EXAMPLE.COM 中的hive |
 | desc          | 描述                                                                                            |
 
