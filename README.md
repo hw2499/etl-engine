@@ -777,7 +777,7 @@ values (?,?,?,?,?)]]>
 
 ### 认证方式
 
-hive.server2.authentication = NONE 
+hive.server2.authentication = NONE <br>
 hive.server2.authentication = KERBEROS 
 
 | 属性            | 说明                                                                                            |
