@@ -185,6 +185,8 @@
 `输入节点-读es节点`
 ## [ELASTIC_WRITER](./README.md#elastic_writer-1)
 `输出节点-写es节点`
+## [INCREMENT](./README.md#increment-1)
+`输入节点-增量对比节点`
 ## [HIVE_READER](./README.md#hive_reader-1)
 `输入节点-读hive节点`
 
@@ -808,6 +810,105 @@ hive.server2.authentication = KERBEROS
           batchSize="1000" type="HIVE"/>
       
 ```
+
+## INCREMENT
+`输入节点-增量对比节点`
+
+
+| 属性                       | 说明                                                  | 适合  |
+|--------------------------|--------------------------------------------------------|-----|
+| id                       | 唯一标示                               ||
+| type                     | INCREMENT                             |     |
+| inputSourceConnection    | 增量对比源表数据连接ID                   |     |
+| inputTargetConnection    | 增量对比目标表数据连接ID                 |     |
+| inputSourceSQL           | 增量对比源表查询语句                     |     |
+| inputTargetSQL           | 增量对比目标表查询语句                   |     |
+| inputSourceFetchSize     | 增量对比源表每次读取记录数大小，-1为一次性全部读取完毕，注意内存是否够用。       |     |
+| inputSourcePrimaryKey    | 增量对比源表主键字段（参与对比），多字段用分号分隔                            |     |
+| inputSourceCompareKey    | 增量对比源表其它字段（参与对比），多字段用分号分隔                            |     |
+| inputSourceMappingKey    | 增量对比源表其它字段（不参与对比），多字段用分号分隔                          |     |
+| inputTargetPrimaryKey    | 增量对比目标表主键字段（参与对比），多字段用分号分隔                          |     |
+| inputTargetCompareKey    | 增量对比目标表其它字段（参与对比），多字段用分号分隔                          |     |
+| inputTargetMappingKey    | 增量对比目标表其它字段（不参与对比），多字段用分号分隔                        |     |
+| outputInsertConnection   | 增量对比输出新增数据目标表数据连接ID                                       |     |
+| outputUpdateConnection   | 增量对比输出更新数据目标表数据连接ID                                       |     |
+| outputDeleteConnection   | 增量对比输出删除数据目标表数据连接ID                                       |     |
+| outputInsertMetadata     | 增量对比输出新增数据目标表元数据ID                                         |     |
+| outputUpdateMetadata     | 增量对比输出更新数据目标表元数据ID                                         |     |
+| outputDeleteMetadata     | 增量对比输出删除数据目标表元数据ID                                         |     |
+| outputInsertSQL          | 增量对比输出新增数据insert语句                                            |     |
+| outputUpdateSQL          | 增量对比输出更新数据update语句                                            |     |
+| outputDeleteSQL          | 增量对比输出删除数据delete语句                                            |     |
+| outputInsertFields       | 增量对比输出新增数据字段名称，注意顺序要和insert语句中的字段点位符顺序保持一致，多字段用分号分隔                      |     |
+| outputUpdateFields       | 增量对比输出更新数据字段名称，注意顺序要和update语句中的字段点位符顺序保持一致，多字段用分号分隔                 |     |
+| outputDeleteFields       | 增量对比输出删除数据字段名称，注意顺序要和delete语句中的字段点位符顺序保持一致，多字段用分号分隔            |     |
+| outputToCopyStream       | 默认为false,为false，则增量变化数据在当前节点直接入库（以OUTPUT_TRASH节点结束），<br/> 为true，则增量变化数据不在当前节点入库，数据流向后续节点（只能流向 COPY_STREAM ），<br/>由下面的节点来操作数据走向。 |     |
+| mustConvertMetadata      | 默认为true代表必须按Metadata配置进行格式转换,写效率低但数据质量高,<br/>为false是不按Metadata配置进行格式转换(前提是数据质量比较高),写效率高但数据质量低（有可能在入库过程中因有胀数据导致报错失败）             |     |
+
+
+### 样本
+
+```shell
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph>
+	
+    <Node id="INCREMENT_01" type="INCREMENT"   
+		inputSourceConnection="CONNECT_1"
+		inputTargetConnection="CONNECT_1"
+		inputSourceSQL="select * from t_s order by f1 asc"
+		inputTargetSQL="select * from t_t order by c1 asc"
+		
+		outputInsertConnection="CONNECT_1"
+		outputUpdateConnection="CONNECT_1"
+		outputDeleteConnection="CONNECT_1"
+		
+		outputInsertSQL="insert into t_t (c1,c2,c3,c4) values (?,?,?,?)"
+		outputUpdateSQL="update t_t set c3=? ,c4=?,c2=? where c1=?"
+		outputDeleteSQL="delete from t_t where c1=?"
+
+		outputInsertFields="c1;c2;c3;c4"
+		outputUpdateFields="c3;c4;c2;c1"
+		outputDeleteFields="c1"
+
+		outputInsertMetadata="METADATA_2"
+		outputUpdateMetadata="METADATA_2"
+		outputDeleteMetadata="METADATA_2"
+
+		inputSourcePrimaryKey="f1"
+		inputSourceCompareKey="f2;f3"
+		inputSourceMappingKey="f4"
+		inputSourceFetchSize="1000"
+
+		inputTargetPrimaryKey="c1"
+		inputTargetCompareKey="c2;c3"
+		inputTargetMappingKey="c4"
+	></Node>
+
+    <Node id="OUTPUT_TRASH_01"   type="OUTPUT_TRASH" desc="垃圾桶节点1"  > </Node>
+
+  <Line id="LINE_01" type="STANDARD" from="INCREMENT_01" to="OUTPUT_TRASH_01" order="1" metadata="METADATA_2"></Line>
+	<Metadata id="METADATA_1" sortId="1">
+        <Field name="f1" type="int" default="" nullable="true"/>
+        <Field name="f2" type="string" default="" nullable="true"/>
+        <Field name="f3" type="float" default="" nullable="true"/>
+        <Field name="f4" type="string" default="" nullable="true"/>
+    </Metadata>
+	<Metadata id="METADATA_2" sortId="1">
+        <Field name="c1" type="string" default="" nullable="true"/>
+        <Field name="c2" type="string" default="" nullable="true"/>
+        <Field name="c3" type="float" default="" nullable="true"/>
+        <Field name="c4" type="string" default="" nullable="true"/>
+    </Metadata>
+
+    <Connection sortId="1" id="CONNECT_1" type="MYSQL" dbURL="127.0.0.1:3306" database="db1" username="root" password="******" token="" org=""/>
+</Graph>
+
+```
+
+
+
+
 
 
 
