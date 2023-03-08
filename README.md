@@ -843,7 +843,7 @@ hive.server2.authentication = KERBEROS
 | outputUpdateFields       | 增量对比输出更新数据字段名称，注意顺序要和update语句中的字段点位符顺序保持一致，多字段用分号分隔                 |     |
 | outputDeleteFields       | 增量对比输出删除数据字段名称，注意顺序要和delete语句中的字段点位符顺序保持一致，多字段用分号分隔            |     |
 | outputToCopyStream       | 默认为false,为false，则增量变化数据在当前节点直接入库（以OUTPUT_TRASH节点结束），<br/> 为true，则增量变化数据不在当前节点入库，数据流向后续节点（只能流向 COPY_STREAM ），<br/>由下面的节点来操作数据走向。 |     |
-| mustConvertMetadata      | 默认为true代表必须按Metadata配置进行格式转换,写效率低但数据质量高,<br/>为false是不按Metadata配置进行格式转换(前提是数据质量比较高),写效率高但数据质量低（有可能在入库过程中因有胀数据导致报错失败）             |     |
+| mustConvertMetadata      | 默认为true代表必须按Metadata配置进行格式转换,写效率低但数据质量高,<br/>为false是不按Metadata配置进行格式转换(前提是数据质量比较高),写效率高但数据质量低（有可能在入库过程中因有脏数据导致报错失败）             |     |
 
 
 ### 样本
