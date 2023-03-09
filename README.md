@@ -19,23 +19,27 @@
 # 资源地址
 - **etl-engine下载地址**
 
-`当前版本最后编译时间20230127`
+	`当前版本最后编译时间20230127`
 
-[下载地址](https://github.com/hw2499/etl-engine/releases)
+	[下载地址](https://github.com/hw2499/etl-engine/releases)
 
 
 - **etl-designer设计器视频播放地址**
 
-`etl-designer设计器支持OEM发行`（目前已经集成到[etl_crontab](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)中使用）
+	`etl-designer设计器支持OEM发行`（目前已经集成到[etl_crontab](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)中使用）
 
-[视频播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
+	[视频播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
 
 
 - **etl-crontab调度设计器视频播放地址**
 
-[视频播放地址](https://www.zhihu.com/zvideo/1568881056832462848?playTime=0.0)
+	[视频播放地址](https://www.zhihu.com/zvideo/1568881056832462848?playTime=0.0)
 
-[etl_crontab使用说明](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)
+	[etl_crontab使用说明](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)
+	
+- **etl-engine配置文件样例**
+
+	[etl-engine使用样例](https://github.com/hw2499/etl-engine/wiki/etl-engine%E4%BD%BF%E7%94%A8%E6%A0%B7%E4%BE%8B)
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
