@@ -1233,7 +1233,7 @@ func WriteFileToDB(fileName string, txt string) {
 
 # 技术交流群
 
-![微信技术交流群](https://i.postimg.cc/T1vymFZT/group-1.png)
+![微信技术交流群](https://i.postimg.cc/CM68mrkH/group-2.png)
 
 # 合作模式
 <details><summary>欢迎对接合作</summary>
