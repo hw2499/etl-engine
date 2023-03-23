@@ -2,6 +2,7 @@
 [![CN doc](https://img.shields.io/badge/文档-中文版-blue.svg)](https://github.com/hw2499/etl-engine/blob/main/README.md)
 [![EN doc](https://img.shields.io/badge/document-English-blue.svg)](https://github.com/hw2499/etl-engine/wiki/etl-engine-readme-for-english)
 
+批流一体数据交换引擎<br>
 实现从源读取数据 -> (目标数据类型转换 | 数据分发) -> 写到目标数据源 
 
 # 产品概述
@@ -45,6 +46,9 @@
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
 - 输入输出数据源支持influxdb v1、clickhouse、prometheus、elasticsearch、hadoop（hive）、postgresql、mysql、oracle、sqlite、rocketmq、kafka、redis、excel
 - 任意一个输入节点可以同任意一个输出节点进行组合，遵循pipeline模型。
+- 支持跨多种类型数据库之间进行联邦查询。
+- 支持消息流数据传输过程中与多种类型数据库之间的联邦计算查询。
+- 联邦查询语法遵循ANSI SQL标准。
 - 为满足业务场景需要，支持配置文件中使用全局变量，实现动态更新配置文件功能。
 - 任意一个输出节点都可以嵌入go语言脚本并进行解析，实现对输出数据流的格式转换功能。
 - 支持节点级二次开发，通过配置自定义节点，并在自定义节点中配置go语言脚本，可扩展实现各种功能操作。
