@@ -4,6 +4,7 @@
 
 批流一体数据交换引擎<br>
 实现从源读取数据 -> (目标数据类型转换 | 数据分发) -> 写到目标数据源 
+<br>支持数据流传输过程中进行融合计算查询
 
 # 产品概述
 - 产品由etl-engine引擎和etl-designer云端设计器及etl-crontab调度组成，
@@ -197,6 +198,8 @@
 `输入节点-增量对比节点`
 ## [HIVE_READER](./README.md#hive_reader-1)
 `输入节点-读hive节点`
+## [FEDERATION_READER](./README.md#federation_reader-1)
+`输入节点-融合查询节点`
 
 
 ## 组合方式
@@ -916,7 +919,88 @@ hive.server2.authentication = KERBEROS
 
 
 
+## FEDERATION_READER
+`输入节点-融合查询节点`
 
+
+| 属性            | 说明                                                                                                               |
+|---------------|------------------------------------------------------------------------------------------------------------------|
+| id            | 唯一标示                                                                                                             |
+| type          | 类型, FEDERATION_READER                                                                                            |
+| factTableConnectionId        | 读取事实表数据源连接ID,只能指定读取一个数据源                                                                                         |
+| factTableQueryFetchSize     | 每次读取事实表记录数 ,-1代表一次性全部读取完毕                                                                                        |
+| factTableQuery  | 读取事实表sql语句,对应 factTableConnectionId                                                                              |
+| dimensionTableConnectionIds      | 读取维表数据源连接ID,多个数据源用分号分隔                                                                                           |
+| dimensionTableQuery | 读取维表对应的sql语句, 多条语句用分号分隔,即对应dimensionTableConnectionIds中所指定的多个数据源连接ID所使用的SQL                                      |
+| federationTableAliasName          | 融合查询中的表别名,多表之间用分号分隔,注意第一个元素是指定事实表别名,第二个元素及之后是指定维表别名,顺序及数组总数是 factTableConnectionId + dimensionTableConnectionIds |
+| federationQuery          | 融合计算查询语句,支持ANSI SQL标准                                                                                            |
+| desc          | 描述                                                                                                               |
+
+
+
+### 样本
+
+**读多种类型数据库表(维表和事实表),根据各业务表id进行关联查询,最终将关联结果写入目标表(或文件)**
+**从不同数据源读取用户表t_user_info、 产品表t_product_info 、订单表t_order_info，并在内存中融合计算查询出所有用户的订单信息**
+
+```shell
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph desc="融合查询1">
+
+    <Node id="FEDERATION_READER_01" type="FEDERATION_READER"   
+		factTableConnectionId="CONNECT_01"
+
+		factTableQueryFetchSize="100"
+		factTableQuery="select o_id,u_id,p_id,o_price,o_number,o_money,o_writetime from t_order_info ORDER BY  CAST(SUBSTRING(o_id,3) AS UNSIGNED)  ASC"
+
+		dimensionTableConnectionIds="CONNECT_02;CONNECT_03"
+
+		dimensionTableQuery="select u_id,u_name,u_phone from t_user_info ORDER BY  CAST(SUBSTRING(u_id,3) AS UNSIGNED)  ASC ;select p_id,p_name,p_contacts,p_desc from t_product_info ORDER BY  CAST(SUBSTRING(p_id,3) AS UNSIGNED)  ASC "
+
+		federationTableAliasName="t_o;t_u;t_p"
+		federationQuery="SELECT t_u.u_id,t_u.u_name,t_u.u_phone,t_o.o_id,t_o.o_price,t_o.o_number,t_o.o_money,t_o.o_writetime,t_p.p_id,t_p.p_name,t_p.p_contacts,t_p.p_desc  FROM  t_u inner JOIN  t_o  ON t_o.u_id=t_u.u_id inner JOIN  t_p ON t_o.p_id=t_p.p_id ORDER BY  INTEGER(SUBSTRING(t_u.u_id,3))  ASC "
+
+	></Node>
+	  <Node id="DB_OUTPUT_01" type="DB_OUTPUT_TABLE" desc="写节点1" dbConnection="CONNECT_04" outputFields="u_id;u_name;u_phone;o_id;o_price;o_number;o_money;o_writetime;p_id;p_name;p_contacts;p_desc"  renameOutputFields="u_id;u_name;u_phone;o_id;o_price;o_number;o_money;o_writetime;p_id;p_name;p_contacts;p_desc"  batchSize="1000"  >
+
+
+        <Script name="sqlScript"><![CDATA[
+
+           insert into db1.t_u_o_p_info (u_id,u_name,u_phone,o_id,o_price,o_number,o_money,o_writetime,p_id,p_name,p_contacts,p_desc) values (?,?,?,?,?,?,?,?,?,?,?,?)
+    ]]></Script>
+	  </Node>
+
+   
+
+ 
+    <Line id="LINE_01" type="STANDARD" from="FEDERATION_READER_01" to="DB_OUTPUT_01" order="1" metadata="METADATA_1"></Line>
+
+	
+	<Metadata id="METADATA_1" sortId="1">
+        <Field name="u_id" type="string" default="" nullable="true"/>
+        <Field name="u_name" type="string" default="" nullable="true"/>
+        <Field name="u_phone" type="string" default="" nullable="true"/>
+        <Field name="o_id" type="string" default="" nullable="true"/>
+		<Field name="o_price" type="float" default="0" nullable="false"/>
+		<Field name="o_number" type="int" default="0" nullable="false"/>
+		<Field name="o_money" type="float" default="0" nullable="false"/>
+		<Field name="o_writetime" type="string" default="" nullable="true"/>
+		<Field name="p_id" type="string" default="" nullable="true"/>
+		<Field name="p_name" type="string" default="" nullable="true"/>
+		<Field name="p_contacts" type="string" default="" nullable="true"/>
+		<Field name="p_desc" type="string" default="" nullable="true"/>
+
+    </Metadata>
+
+    <Connection  id="CONNECT_01" type="MYSQL" dbURL="127.0.0.1:3306" database="db1" username="root" password="******" token="" org=""/>
+    <Connection  id="CONNECT_02" type="MYSQL" dbURL="127.0.0.1:3307" database="db1" username="root" password="******" token="" org=""/>
+    <Connection  id="CONNECT_03" type="MYSQL" dbURL="127.0.0.1:3308" database="db1" username="root" password="******" token="" org=""/>
+    <Connection  id="CONNECT_04" type="MYSQL" dbURL="127.0.0.1:3309" database="db1" username="root" password="******" token="" org=""/>
+</Graph>
+
+
+```
 
 
 
