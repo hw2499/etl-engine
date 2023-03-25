@@ -941,6 +941,7 @@ hive.server2.authentication = KERBEROS
 ### 样本
 
 **读多种类型数据库表(维表和事实表),根据各业务表id进行关联查询,最终将关联结果写入目标表(或文件)**
+<br>
 **从不同数据源读取用户表t_user_info、 产品表t_product_info 、订单表t_order_info，并在内存中融合计算查询出所有用户的订单信息**
 
 ```shell
