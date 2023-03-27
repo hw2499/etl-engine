@@ -927,12 +927,12 @@ hive.server2.authentication = KERBEROS
 |---------------|------------------------------------------------------------------------------------------------------------------|
 | id            | 唯一标示                                                                                                             |
 | type          | 类型, FEDERATION_READER                                                                                            |
-| factTableConnectionId        | 读取事实表数据源连接ID,只能指定读取一个数据源,factTableConnectionId和dimensionTableConnectionIds可同时设置也可单独设置                                                                                         |
+| factTableConnectionId        | 读取事实表数据源连接ID,只能指定读取一个数据源,<br/>factTableConnectionId和dimensionTableConnectionIds可同时设置也可单独设置                                                                                         |
 | factTableQueryFetchSize     | 每次读取事实表记录数 ,-1代表一次性全部读取完毕                                                                                        |
 | factTableQuery  | 读取事实表sql语句,对应 factTableConnectionId                                                                              |
-| dimensionTableConnectionIds      | 读取维表数据源连接ID,多个数据源用分号分隔,factTableConnectionId和dimensionTableConnectionIds可同时设置也可单独设置                                                                                           |
+| dimensionTableConnectionIds      | 读取维表数据源连接ID,多个数据源用分号分隔,<br/>factTableConnectionId和dimensionTableConnectionIds可同时设置也可单独设置                                                                                           |
 | dimensionTableQuery | 读取维表对应的sql语句, 多条语句用分号分隔,即对应dimensionTableConnectionIds中所指定的多个数据源连接ID所使用的SQL                                      |
-| federationTableAliasName          | 融合查询中的表别名,多表之间用分号分隔,注意第一个元素是指定事实表别名,第二个元素及之后是指定维表别名,顺序及数组总数是 factTableConnectionId + dimensionTableConnectionIds |
+| federationTableAliasName          | 融合查询中的表别名,多表之间用分号分隔,注意第一个元素是指定事实表别名,第二个元素及之后是指定维表别名,顺序及数组总数是 factTableConnectionId + dimensionTableConnectionIds<br/>或factTableConnectionId或dimensionTableConnectionIds |
 | federationQuery          | 融合计算查询语句,支持ANSI SQL标准                                                                                            |
 | desc          | 描述                                                                                                               |
 
