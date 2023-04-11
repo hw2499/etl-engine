@@ -2,7 +2,7 @@
 [![CN doc](https://img.shields.io/badge/文档-中文版-blue.svg)](https://github.com/hw2499/etl-engine/blob/main/README.md)
 [![EN doc](https://img.shields.io/badge/document-English-blue.svg)](https://github.com/hw2499/etl-engine/wiki/etl-engine-readme-for-english)
 
-批流一体数据交换引擎<br>
+流批一体数据交换引擎<br>
 实现从源读取数据 -> (目标数据类型转换 | 数据分发) -> 写到目标数据源 
 <br>支持数据流传输过程中进行融合计算查询
 
