@@ -78,6 +78,10 @@
 
 ![转换节点](https://i.postimg.cc/tT6xKygt/transform.png)  
 
+- 流批一体融合查询 支持多源输入,内存计算,融合输出
+
+![流批一体融合查询](https://i.postimg.cc/W3MZMjJ5/fedreation-1.png)
+
 
 # 调度集成方案
 
