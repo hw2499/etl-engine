@@ -62,24 +62,34 @@
 
 - 输入输出任意组合 
 
-![输入输出](https://i.postimg.cc/yxYHLv3y/input-output.png)
+<br>任意一个输入节点可以跟任意一个输出节点组合<br>
+![输入输出](https://i.postimg.cc/VkK28rDc/input-output-1.png)
+
 - 解析嵌入脚本语言 方便格式转换 
 
-![支持嵌入脚本语言](https://i.postimg.cc/gJM5nn6d/script.png)
+<br>输出数据流时,支持嵌入go语言对数据流进行转换输出<br>
+![支持嵌入脚本语言](https://i.postimg.cc/fTLxPVtd/script-1.png)
+
 - 数据流复制 方便多路输出 
 
-![数据流复制](https://i.postimg.cc/9FY9RMc3/copy-stream.png)
+<br>任意一个输入节点都可以输出到数据流拷贝节点<br>
+<br>数据流拷贝节点可以将数据分支到多个输出节点<br>
+![数据流复制](https://i.postimg.cc/tRSjbcTc/copy-stream-1.png)
 
 - 自定义节点 方便实现各种操作
 
-![自定义节点](https://i.postimg.cc/Dz1gGtVZ/custom-node.png)  
+<br>自定义节点通过嵌入Go语言实现各种操作<br>
+![自定义节点](https://i.postimg.cc/59hMjCB5/custom-node-1.png)
 
 - 转换节点 方便实现各种转换
 
-![转换节点](https://i.postimg.cc/tT6xKygt/transform.png)  
+<br>通过在转换节点中嵌入Go语言实现各种转换能力<br>
+<br>默认任意一个输出节点都可以嵌入Go语言实现转换能力<br>
+![转换节点](https://i.postimg.cc/fLbMjQyx/transform-1.png)
 
 - 流批一体融合查询 支持多源输入,内存计算,融合输出
 
+<br>支持多源输入,内存计算,融合输出<br>
 ![流批一体融合查询](https://i.postimg.cc/W3MZMjJ5/fedreation-1.png)
 
 
