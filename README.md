@@ -81,7 +81,7 @@
 ![转换节点](https://i.postimg.cc/fLbMjQyx/transform-1.png)
 
 - 流批一体融合查询 
-<br>支持多源输入,内存计算,融合输出<br>
+<br>支持多源输入,内存计算,融合输出 [融合查询语法](https://github.com/hw2499/etl-engine/wiki/etl-engine%E8%9E%8D%E5%90%88%E6%9F%A5%E8%AF%A2%E8%AF%AD%E6%B3%95)<br>
 ![流批一体融合查询](https://i.postimg.cc/W3MZMjJ5/fedreation-1.png)
 
 
