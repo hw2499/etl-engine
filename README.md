@@ -21,7 +21,7 @@
 # 资源地址
 - **etl-engine下载地址**
 
-	`当前版本最后编译时间20230622`
+	`当前版本最后编译时间20230723`
 
 	[下载地址](https://github.com/hw2499/etl-engine/releases)
 
@@ -391,6 +391,10 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 | group      | mq组名称                     |         |
 | topic      | 订阅主题名称                    |         |
 | listenerFlag        | 1是按分区进行监听 ; 2是按单通道进行监听,topic可以是多个|         |
+| allPartition | 是否消费所有分区,true是消费所有分区                                        |         |
+| partition    | 当allPartition为false时，partition代表消费的分区数字，可按指定分区数字进行消费,适合分流场景 |         |
+| saslUserName | 用于SASL认证                          |         |
+| saslPassword | 用于SASL认证                           |         |
 
 ### 样本
 ```shell
