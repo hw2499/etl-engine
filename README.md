@@ -307,7 +307,7 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 | id          | 唯一标示                                              |
 | type         |  XLS_WRITER                                    |
 | fileURL       | 文件路径+文件名称                                         |
-| startRow    | 从第几行开写入  如：数字2代表是第3行(索引从0开始,0代表第1行,1代表第2行) 开始写数据                        |
+| startRow    | 从第几行开始写入  如：数字2代表是第3行(索引从0开始,0代表第1行,1代表第2行) 开始写数据                        |
 | sheetName | 表名称                                               |
 |outputFields| 输入节点传递过来的字段名称，<br/>格式：field1;field2;field3        |
 | renameOutputFields         | 字段映射关系，格式：指标=B;年度=C;地区=D<br/>字段名称=第几列 多个字段之间用分号分隔 |
