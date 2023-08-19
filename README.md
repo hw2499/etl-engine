@@ -44,6 +44,11 @@
 
 	[etl-engine使用样例](https://github.com/hw2499/etl-engine/wiki/etl-engine%E4%BD%BF%E7%94%A8%E6%A0%B7%E4%BE%8B)
 
+- **etl-engine嵌入go脚本视频播放地址**
+  
+  [视频播放地址](https://www.zhihu.com/zvideo/1675182246339244032)
+
+
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
 - 输入输出数据源支持influxdb v1、clickhouse、prometheus、elasticsearch、hadoop（hive）、postgresql、mysql、oracle、sqlite、rocketmq、kafka、redis、excel
