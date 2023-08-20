@@ -94,8 +94,7 @@
 <br>支持将Master MySQL数据库数据实时同步到其它MySQL、Oracle、PostgreSQL数据库
 <br>提供数据实时同步备份、增量对比能力
 
-![MySQL增量同步方案](https://i.postimg.cc/T3ndcj9h/mysqlbinlog.png)
-
+![增量同步方案](https://i.postimg.cc/T3ndcj9h/mysqlbinlog.png)
 
 # 调度集成方案
 
