@@ -31,7 +31,7 @@
 
 	`etl-designer设计器支持OEM发行`（目前已经集成到[etl_crontab](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)中使用）
 
-	[视频播放地址](https://www.zhihu.com/zvideo/1556673426865139712?playTime=0.0)
+	[视频播放地址](https://www.zhihu.com/zvideo/1677634935459102720)
 
 
 - **etl-crontab调度设计器视频播放地址**
