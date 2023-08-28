@@ -36,7 +36,7 @@
 
 - **etl-crontab调度设计器视频播放地址**
 
-	[视频播放地址](https://www.zhihu.com/zvideo/1568881056832462848?playTime=0.0)
+	[视频播放地址](https://www.zhihu.com/zvideo/1679483244993867776)
 
 	[etl_crontab使用说明](https://github.com/hw2499/etl-engine/wiki/etl-crontab%E8%B0%83%E5%BA%A6)
 	
