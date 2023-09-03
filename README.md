@@ -5,7 +5,7 @@
 流批一体数据交换引擎<br>
 实现从源读取数据 -> (目标数据类型转换 | 数据分发) -> 写到目标数据源 
 <br>支持数据流传输过程中进行融合计算查询
-<br>支持MySQL数据binlog模式实时同步到其它数据库
+<br>支持CDC模式增量同步方案
 
 # 产品概述
 - 产品由etl-engine引擎和etl-designer云端设计器及etl-crontab调度组成，
@@ -62,7 +62,8 @@
 - 任意一个输入节点都可以通过组合数据流拷贝节点，实现从一个输入同时分支到多个输出的场景。
 - 支持将各节点执行日志输出到数据库中。
 - 支持跟crontab调度组合配置，实现周期性执行etl-engine任务。
-- 支持MySQLBinLog数据同步，将MySQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
+- 支持MySQL BinLog模式数据同步，将MySQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
+- 支持PostgreSQL WAL模式数据同步，将PostgreSQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
 
 # 数据流特性
 
@@ -219,6 +220,9 @@
 `输入节点-融合查询节点`
 ## MYSQL_BINLOG
 `输入节点-MySQLBinLog节点`
+## PG_WAL
+`输入节点-PG_WAL节点`
+
 
 ## 组合方式
 - `任意一个输入节点都可以连接到任意一个输出节点`
