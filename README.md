@@ -62,8 +62,8 @@
 - 任意一个输入节点都可以通过组合数据流拷贝节点，实现从一个输入同时分支到多个输出的场景。
 - 支持将各节点执行日志输出到数据库中。
 - 支持跟crontab调度组合配置，实现周期性执行etl-engine任务。
-- 支持MySQL BinLog模式数据同步，将MySQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
-- 支持PostgreSQL WAL模式数据同步，将PostgreSQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
+- 支持MySQL CDC模式数据同步，将MySQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
+- 支持PostgreSQL CDC模式数据同步，将PostgreSQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
 
 # 数据流特性
 
@@ -91,11 +91,17 @@
 <br>支持多源输入,内存计算,融合输出 [融合查询语法](https://github.com/hw2499/etl-engine/wiki/etl-engine%E8%9E%8D%E5%90%88%E6%9F%A5%E8%AF%A2%E8%AF%AD%E6%B3%95)<br>
 ![流批一体融合查询](https://i.postimg.cc/W3MZMjJ5/fedreation-1.png)
 
-- MySQLBinLog模式数据同步
+- MySQL CDC模式数据同步
 <br>支持将Master MySQL数据库数据实时同步到其它MySQL、Oracle、PostgreSQL数据库
 <br>提供数据实时同步备份、增量对比能力[视频播放地址](https://www.zhihu.com/zvideo/1677072535978655745)
 
 ![增量同步方案](https://i.postimg.cc/pd3M5bPn/mysqlbinlog.png)
+
+- PostgreSQL CDC模式数据同步
+  <br>支持将Master PostgreSQL数据库数据实时同步到其它PostgreSQL、MySQL、Oracle等数据库
+  <br>提供数据实时同步备份、增量对比能力
+
+![PostgreSQL增量同步方案](https://i.postimg.cc/MprV3XH6/postgre-wal.png)
 
 # 调度集成方案
 
