@@ -101,7 +101,7 @@
   <br>支持将Master PostgreSQL数据库数据实时同步到其它PostgreSQL、MySQL、Oracle等数据库
   <br>提供数据实时同步备份、增量对比能力
 
-![PostgreSQL增量同步方案](https://i.postimg.cc/MprV3XH6/postgre-wal.png)
+![PostgreSQL增量同步方案](https://i.postimg.cc/XJDv4yMq/postgre-wal.png)
 
 # 调度集成方案
 
