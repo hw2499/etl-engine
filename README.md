@@ -99,7 +99,7 @@
 
 - PostgreSQL CDC模式数据同步
   <br>支持将Master PostgreSQL数据库数据实时同步到其它PostgreSQL、MySQL、Oracle等数据库
-  <br>提供数据实时同步备份、增量对比能力
+  <br>提供数据实时同步备份、增量对比能力[视频播放地址](https://www.zhihu.com/zvideo/1682339598326448128)
 
 ![PostgreSQL增量同步方案](https://i.postimg.cc/XJDv4yMq/postgre-wal.png)
 
