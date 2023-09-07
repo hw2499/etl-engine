@@ -62,8 +62,8 @@
 - 任意一个输入节点都可以通过组合数据流拷贝节点，实现从一个输入同时分支到多个输出的场景。
 - 支持将各节点执行日志输出到数据库中。
 - 支持跟crontab调度组合配置，实现周期性执行etl-engine任务。
-- 支持MySQL CDC模式数据同步，将MySQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
-- 支持PostgreSQL CDC模式数据同步，将PostgreSQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL数据库.
+- 支持MySQL CDC模式数据同步，将MySQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL、Elastic等数据库.
+- 支持PostgreSQL CDC模式数据同步，将PostgreSQL数据库表数据的变化实时同步到其它MySQL、Oracle、PostgreSQL、Elastic等数据库.
 
 # 数据流特性
 
