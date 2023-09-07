@@ -92,16 +92,16 @@
 ![流批一体融合查询](https://i.postimg.cc/W3MZMjJ5/fedreation-1.png)
 
 - MySQL CDC模式数据同步
-<br>支持将Master MySQL数据库数据实时同步到其它MySQL、Oracle、PostgreSQL数据库
+<br>支持将Master MySQL数据库数据实时同步到其它MySQL、Oracle、PostgreSQL、Elastic数据库
 <br>提供数据实时同步备份、增量对比能力[视频播放地址](https://www.zhihu.com/zvideo/1677072535978655745)
 
-![增量同步方案](https://i.postimg.cc/pd3M5bPn/mysqlbinlog.png)
+![增量同步方案](https://i.postimg.cc/0jXz9NHm/mysqlbinlog.png)
 
 - PostgreSQL CDC模式数据同步
-  <br>支持将Master PostgreSQL数据库数据实时同步到其它PostgreSQL、MySQL、Oracle等数据库
+  <br>支持将Master PostgreSQL数据库数据实时同步到其它PostgreSQL、MySQL、Oracle、Elastic等数据库
   <br>提供数据实时同步备份、增量对比能力[视频播放地址](https://www.zhihu.com/zvideo/1682339598326448128)
 
-![PostgreSQL增量同步方案](https://i.postimg.cc/XJDv4yMq/postgre-wal.png)
+![PostgreSQL增量同步方案](https://i.postimg.cc/pXVQxhy9/postgre-wal.png)
 
 # 调度集成方案
 
