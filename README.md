@@ -14,7 +14,7 @@
 - etl-crontab调度设计器负责按时间周期执行指定的etl任务，etl-crontab调度还提供了查询etl任务执行日志功能，
 - 三部分组成了etl解决方案，可集成到任意使用场景。
 
-[产品详细介绍](https://pan.baidu.com/s/1zXVCdHw5i4z1K6kytK6Egw?pwd=ccje)
+[产品详细介绍](https://pan.baidu.com/s/1bMUZuNb0KAXGuUbqZp7ouQ?pwd=ngzf)
 
 [高可用介绍](https://pan.baidu.com/s/1xfJ25KI4KH6ZMEW3sZ5HlA?pwd=36be)
 
@@ -1050,9 +1050,12 @@ hive.server2.authentication = KERBEROS
 | id    | 唯一标示       ||
 | field |            |                                                  |
 | name  | 输出数据源的字段名称 | renameOutputFields,<br/>renameOutputTags         |
-| type  | 输出数据源的字段类型 | string,int,int32,float,<br/>str_timestamp,decimal,<br/>datetime,timestamp  |
+| type  | 输出数据源的字段类型 | string,int,int32,float,<br/>str_timestamp,decimal,<br/>datetime,timestamp,blob  |
 | default | 默认值        | 当nullable为false时，如果输出值为空字符串，则可以通过default来指定输出的默认值 |
 | nullable| 是否允许为空     | false不允许为空，必须和default配合使用。true允许为空。             |
+| errDefault | 如果输入数据向输出数据类型转换失败时，是否启动默认值 | 如果设置值,则转换出错时也能向下执行,即出错的值使用该默认值,<br/>如果不设置该值,则转换出错时不能向下执行。   |
+| dataFormat | 对日期输出格式的配置       | string -> datetime 或 datetime -> string 需要配置日期格式 <br/>日期格式配置如: YYYY-MM-DD hh:mm:ss  或YYYY-MM-DD hh:mm:ssZ+8h |
+| dataLen    | 对小数位格式的配置     | string -> decimal 格式设置输出数字小数点位数,代表保留小数点后几位,或用于日期输出时定义格式长度                                        |
 
 
 ## 数据源Connection
