@@ -224,9 +224,9 @@
 `输入节点-读hive节点`
 ## [FEDERATION_READER](./README.md#federation_reader-1)
 `输入节点-融合查询节点`
-## MYSQL_BINLOG
+## [MYSQL_BINLOG](./README.md#mysql_binlog-1)
 `输入节点-MySQLBinLog节点`
-## PG_WAL
+## [PG_WAL](./README.md#pg_wal-1)
 `输入节点-PG_WAL节点`
 
 
