@@ -1035,6 +1035,117 @@ hive.server2.authentication = KERBEROS
 
 ```
 
+## MYSQL_BINLOG
+`输入节点-MySQLBinLog节点`
+
+| 属性                           | 说明                                                      |
+|------------------------------|---------------------------------------------------------|
+| id                           | 唯一标示                                                    |
+| type                         | 类型, MYSQL_BINLOG                                        |
+| masterAddress                | MySQL数据库地址：127.0.0.1:3306                               |
+| masterUserName               | MySQL数据库登录用户名称                                          |
+| masterPassword               | MySQL数据库登录用户密码                                          |
+| masterCanalIncludeTableRegex | 监听的源表名称,可写正式表达式,多个表可用;分隔,格式：db1.t_1                     |
+| masterCanalExcludeTableRegex | 排除监听的源表名称,与masterCanalIncludeTableRegex是互斥关系            |
+| slaveOutputConnectionId      | 监听到数据变化后,输出的目标数据源ID                                     |
+| slaveOutputMetaDataId        | 监听到数据变化后,输出的目标元数据ID,可设置输出数据的格式                          |
+| outputToCopyStream           | false时代表在本节点直接将源表变化的数据入库到目标表                            |
+| masterExtInfo     | 默认无需配置,用于多实例观测服务心跳使用                               |
+
+### 样本
+<br>将MySQL数据库中的数据变化输出到其它MySQL、Oracel、PostgreSQL、Elastic等目标数据库中
+
+```shell
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph runMode="2" desc="读mysqlbin写db">
+  
+  <Node id="MYSQL_BINLOG_01"   type="MYSQL_BINLOG" desc="MYSQL_BINLOG输入节点1"
+      masterAddress="127.0.0.1:3306"
+      masterUserName="root"
+      masterPassword="******"
+      masterCanalIncludeTableRegex="db1.t_order_info"
+      masterCanalExcludeTableRegex=""
+      slaveOutputConnectionId="CONNECT_02"
+      slaveOutputMetaDataId="METADATA_01"
+      outputToCopyStream="false"
+  >
+  </Node>
+    <Node id="OUTPUT_TRASH_01" type="OUTPUT_TRASH" desc="输出1" >
+   </Node>
+
+  <Line id="LINE_01" type="STANDARD" from="MYSQL_BINLOG_01" to="OUTPUT_TRASH_01" order="0" metadata="METADATA_01"></Line>
+
+  <Metadata id="METADATA_01">
+
+        <Field name="hw_u1.t_1.c1" type="int" default="0" nullable="false"/>
+        <Field name="hw_u1.t_1.c2" type="string" default="" nullable="false"/>
+       <Field name="hw_u1.t_222.c3" type="decimal" default="0" nullable="false" dataFormat="2" />
+       <Field name="hw_u1.t_222.writetime" type="datetime" default="" nullable="false" dataFormat="YYYY-MM-DD hh:mm:ss"/>
+       <Field name="hw_u1.t_order_info.o_writetime" type="datetime" default="" nullable="false" dataFormat="YYYY-MM-DD hh:mm:ss"/>
+  </Metadata>
+
+    <Connection id="CONNECT_01" dbURL="127.0.0.1:3306" database="db2" username="root" password="******" batchSize="10000" type="MYSQL"/>
+    <Connection id="CONNECT_02" type="ORACLE" dbURL="127.0.0.1:1521" database="orcl" username="hw_u1" password="******" token="" org=""/>
+    <Connection id="CONNECT_03"  dbURL="127.0.0.1:5432" database="postgres" username="hw_u1" password="******"  batchSize="1000" type="POSTGRES"/>
+
+</Graph>
+
+```
+
+## PG_WAL
+`输入节点-PG_WAL节点`
+
+
+| 属性                           | 说明                                                 |
+|------------------------------|----------------------------------------------------|
+| id                           | 唯一标示                                               |
+| type                         | 类型, PG_WAL                                         |
+| masterAddress                | PostgreSQL数据库地址：127.0.0.1:3306                     |
+| masterUserName               | PostgreSQL数据库登录用户名称                                |
+| masterPassword               | PostgreSQL数据库登录用户密码                                |
+| masterDataBase | PostgreSQL数据库名称                                    |
+| masterPublicationTables | 监听的源表名称,多个表可用;分隔,格式：hw_u1.t_1;hw_u2.t_2  |
+| slaveOutputConnectionId      | 监听到数据变化后,输出的目标数据源ID                                |
+| slaveOutputMetaDataId        | 监听到数据变化后,输出的目标元数据ID,可设置输出数据的格式                     |
+| outputToCopyStream           | false时代表在本节点直接将源表变化的数据入库到目标表                       |
+| masterExtInfo     | 默认无需配置,用于多实例观测服务心跳使用                               |
+
+### 样本
+<br>将PostgreSQL数据库中的数据变化输出到其它MySQL、Oracel、PostgreSQL、Elastic等目标数据库中。
+
+```shell
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph runMode="2" desc="读pgWal写db">
+  <Node id="PG_WAL_01"   type="PG_WAL" desc="PG_WAL输入节点1"
+      masterAddress="127.0.0.1:5432"
+    
+      masterDataBase="postgres"
+      masterUserName="hw_u1"
+      masterPassword="******"
+      masterPublicationTables="hw_u1.t_1"
+    
+      slaveOutputConnectionId="CONNECT_01"
+      slaveOutputMetaDataId="METADATA_01"
+      outputToCopyStream="false"
+  >
+  </Node>
+ <Node id="OUTPUT_TRASH_01" type="OUTPUT_TRASH" desc="输出1" >
+   </Node>
+
+  <Line id="LINE_01" type="STANDARD" from="PG_WAL_01" to="OUTPUT_TRASH_01" order="0" metadata="METADATA_01"></Line>
+
+  <Metadata id="METADATA_01">
+
+        <Field name="hw_u1.t_1.c1" type="int" default="0" nullable="false"/>
+  </Metadata>
+
+    <Connection id="CONNECT_01" dbURL="127.0.0.1:3306" database="db1" username="root" password="******" batchSize="10000" type="MYSQL"/>
+   <Connection  id="CONNECT_02" type="ORACLE" dbURL="127.0.0.1:1521" database="orcl" username="hw_u1" password="******" token="" org=""/>
+   <Connection id="CONNECT_03"  dbURL="127.0.0.1:5432" database="postgres" username="hw_u1" password="******"  batchSize="1000" type="POSTGRES"/>
+
+
+```
 
 
 
