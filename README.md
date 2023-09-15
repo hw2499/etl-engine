@@ -1036,7 +1036,7 @@ hive.server2.authentication = KERBEROS
 ```
 
 ## MYSQL_BINLOG
-`输入节点-MySQLBinLog节点`
+`输入节点-MySQLBinLog节点,阻塞模式`
 
 | 属性                           | 说明                                                      |
 |------------------------------|---------------------------------------------------------|
@@ -1054,6 +1054,16 @@ hive.server2.authentication = KERBEROS
 
 ### 样本
 <br>将MySQL数据库中的数据变化输出到其它MySQL、Oracel、PostgreSQL、Elastic等目标数据库中
+
+- MySQL配置文件,配置事项
+
+```shell
+server-id = 123 
+log-bin    = /opt/mysql/data/mysql-bin
+binlog_format = ROW 
+
+```
+- etl engine任务配置
 
 ```shell
 
@@ -1094,7 +1104,7 @@ hive.server2.authentication = KERBEROS
 ```
 
 ## PG_WAL
-`输入节点-PG_WAL节点`
+`输入节点-PG_WAL节点,阻塞模式`
 
 
 | 属性                           | 说明                                                 |
@@ -1113,6 +1123,21 @@ hive.server2.authentication = KERBEROS
 
 ### 样本
 <br>将PostgreSQL数据库中的数据变化输出到其它MySQL、Oracel、PostgreSQL、Elastic等目标数据库中。
+
+- postgresql.conf配置文件,配置事项
+```shell
+   wal_level = logical
+   max_replication_slots = 20
+   max_wal_senders = 20
+
+```
+- pg_hba.conf配置文件,配置事项
+```shell
+host    all         all              0.0.0.0/0               md5 
+
+```
+
+- etl engine任务配置
 
 ```shell
 <?xml version="1.0" encoding="UTF-8"?>
