@@ -228,7 +228,8 @@
 `输入节点-MySQLBinLog节点`
 ## [PG_WAL](./README.md#pg_wal-1)
 `输入节点-PG_WAL节点`
-
+## [PG_WAL2JSON](./README.md#pg_wal2json-1)
+`输入节点-PG_WAL2JSON节点`
 
 ## 组合方式
 - `任意一个输入节点都可以连接到任意一个输出节点`
@@ -1172,7 +1173,31 @@ host    all         all              0.0.0.0/0               md5
 
 ```
 
+## PG_WAL2JSON
+`输入节点-PG_WAL2JSON节点,阻塞模式`
 
+
+| 属性                      | 说明                                                               |
+|-------------------------|------------------------------------------------------------------|
+| id                      | 唯一标示                                                             |
+| type                    | 类型, PG_WAL                                                       |
+| masterAddress           | PostgreSQL数据库地址：127.0.0.1:3306                                   |
+| masterUserName          | PostgreSQL数据库登录用户名称                                              |
+| masterPassword          | PostgreSQL数据库登录用户密码                                              |
+| masterDataBase          | PostgreSQL数据库名称                                                  |
+| masterAddTables         | 监听的源表名称,多个表可用;分隔,格式：hw_u1.t_1;hw_u2.t_2               |
+| masterFilterTables      | 排除监听的源表名称,多个表可用;分隔,格式：hw_u1.t_1;hw_u2.t_2 ,与masterAddTables是互斥关系 |
+| slaveOutputConnectionId | 监听到数据变化后,输出的目标数据源ID                                              |
+| slaveOutputMetaDataId   | 监听到数据变化后,输出的目标元数据ID,可设置输出数据的格式                                   |
+| outputToCopyStream      | false时代表在本节点直接将源表变化的数据入库到目标表                                     |
+| masterExtInfo           | 默认无需配置,用于多实例观测服务心跳使用                                             |
+
+### 样本
+<br>将PostgreSQL数据库中的数据变化输出到其它MySQL、Oracel、PostgreSQL、Elastic等目标数据库中。
+```shell
+wal2json解码器,PostgreSQL需要安装wal2json.so插件 ,
+配置参考 PG_WAL 节点
+```
 
 
 ## 元数据Metadata
