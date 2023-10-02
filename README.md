@@ -230,6 +230,11 @@
 `输入节点-PG_WAL节点`
 ## [PG_WAL2JSON](./README.md#pg_wal2json-1)
 `输入节点-PG_WAL2JSON节点`
+## HBASE_READER
+`输入节点-读Hbase节点`
+## HBASE_WRITER
+`输入节点-写Hbase节点`
+
 
 ## 组合方式
 - `任意一个输入节点都可以连接到任意一个输出节点`
@@ -1198,6 +1203,73 @@ host    all         all              0.0.0.0/0               md5
 wal2json解码器,PostgreSQL需要安装wal2json.so插件 ,
 配置参考 PG_WAL 节点
 ```
+
+## HBASE_READER
+`输入节点-读Hbase节点`
+<br>通过thrift2服务接口访问,默认会输出每行的 `_rk_` 代表行键。
+
+| 属性                           | 说明                                                                        |
+|------------------------------|---------------------------------------------------------------------------|
+| id                           | 唯一标示                                                                      |
+| type                         | 类型, HBASE_READER                                                          |
+| fetchSize                         | 每次读取记录数,根据服务端配置决定,建议1000                                                  |
+| tableName                         | 表名称,格式遵循 命名空间:表名称 或 表名称                                                   |
+| limitRow                         | 读取结果集最大上限,0为不限制                                                           |
+| maxVersions                         | 读取结果集所属版本号,根据情况配置,建议越大越好                                                  |
+| cols                         | 读取字段名称,格式遵循 列簇:列标示符 或 列簇,多个列之间用分号分隔,如：info:name;info:age;info:height;data |
+| Script                         | filter过滤器表达式,如：SingleColumnValueFilter('info','age',>=,'binary:24')       |
+
+
+### 样本
+
+```shell
+  	  <Node id="HBASE_READER_01" dbConnection="CONNECT_01" type="HBASE_READER" desc="读hbase节点1"
+		fetchSize="1000"
+		tableName="t_user_info1"
+		limitRow="0"
+		maxVersions="100"
+		cols="info:name;info:age;info:height;data:address" >
+		<Script name="sqlScript"><![CDATA[
+				  SingleColumnValueFilter('info','age',>=,'binary:24') 
+
+	]]></Script>
+	  </Node>
+	  
+    <Connection id="CONNECT_01"  dbURL="127.0.0.1:9090" database="" username="" password=""  batchSize="1000" type="HBASE"/>
+
+```
+
+
+## HBASE_WRITER
+`输入节点-写Hbase节点`
+<br>通过thrift2服务接口访问。
+
+| 属性                  | 说明                                                                         |
+|------------|----------------------------------------------------------------------------|
+| id                 | 唯一标示                                                                       |
+| type          | 类型, HBASE_WRITER                                                           |
+| batchSize           | 批量提交记录数,根据服务端配置决定,建议1000                                                   |
+| tableName         | 表名称,格式遵循 命名空间:表名称 或 表名称                                                    |
+| outputFields         | 输入节点读数据时传递过来的字段名称                                                          |
+| renameOutputFields         | 输出节点到目标数据源的字段名称,格式遵循 列簇:列标示符 如: `_rk_`;info:name;info:age;info:height;data |
+| rowKey                   | 代表行键,从 renameOutputFields 中匹配字段名称并获取,如果不填则系统默认生成  rk_uuid  格式              |
+
+### 样本
+```shell
+      <Node id="HBASE_WRITER_01" dbConnection="CONNECT_02" type="HBASE_WRITER" desc="写hbase节点1"
+		 batchSize="1000"
+	 	 tableName="hw_ns:t_etl_logs"
+		 outputFields="uuid;username;fileurl;taskdesc;writetime"
+	     renameOutputFields="uuid;username;fileurl;taskdesc;writetime"
+	     rowKey="uuid"
+	  >
+	  </Node>
+
+     <Connection id="CONNECT_02"  dbURL="127.0.0.1:9090" database="" username="" password=""  batchSize="" type="HBASE"/>
+
+
+```
+
 
 
 ## 元数据Metadata
