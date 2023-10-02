@@ -51,7 +51,7 @@
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
-- 输入输出数据源支持influxdb v1、clickhouse、prometheus、elasticsearch、hadoop（hive）、postgresql、mysql、oracle、sqlite、rocketmq、kafka、redis、excel
+- 输入输出数据源支持influxdb v1、clickhouse、prometheus、elasticsearch、hadoop（hive,hbase）、postgresql、mysql、oracle、sqlite、rocketmq、kafka、redis、excel
 - 任意一个输入节点可以同任意一个输出节点进行组合，遵循pipeline模型。
 - 支持跨多种类型数据库之间进行数据融合查询。
 - 支持消息流数据传输过程中与多种类型数据库之间的数据融合计算查询。
