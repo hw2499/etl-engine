@@ -1142,6 +1142,11 @@ binlog_format = ROW
 host    all         all              0.0.0.0/0               md5 
 
 ```
+- 监听的数据表均需要执行以下操作,如表hw_u1.t_4
+```shell
+ALTER TABLE hw_u1.t_4  REPLICA IDENTITY  FULL ;
+
+```
 
 - etl engine任务配置
 
