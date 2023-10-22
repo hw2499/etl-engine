@@ -22,7 +22,7 @@
 # 资源地址
 - **etl-engine下载地址**
 
-	`当前版本最后编译时间20230918`
+	`当前版本最后编译时间20231022`
 
 	[下载地址](https://github.com/hw2499/etl-engine/releases)
 
@@ -230,9 +230,9 @@
 `输入节点-PG_WAL节点`
 ## [PG_WAL2JSON](./README.md#pg_wal2json-1)
 `输入节点-PG_WAL2JSON节点`
-## HBASE_READER
+## [HBASE_READER](https://github.com/hw2499/etl-engine#hbase_reader-1)
 `输入节点-读Hbase节点`
-## HBASE_WRITER
+## [HBASE_WRITER](https://github.com/hw2499/etl-engine#hbase_writer-1)
 `输入节点-写Hbase节点`
 
 
