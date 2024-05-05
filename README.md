@@ -509,6 +509,7 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 | db       | 0              | 数据库ID |
 | isGetTTL       | true或false 是否读取ttl信息    |       |
 | keys       | 读取的KEY，多个KEY之间用分号分隔    |  目前只支持读取string,int,float类型内容     |
+| patternMatchKey       | 默认是false,当设置为true时,证明keys中的内容是进行模式匹配的字符串,如keys=HW_*代表以HW_为前缀的所有key | 设置为true时,默认生成key;value;key_ttl三个固定键,用于后续读取 |
 
 
 ### 样本
@@ -518,8 +519,16 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
   nameServer="127.0.0.1:6379" password="******" db="0" isGetTTL="true" keys="a1;a_1" ></Node>
 ```
 
+```shell
+
+ <Node id="REDIS_READER_01"   type="REDIS_READER" desc="输入节点1" nameServer="127.0.0.1:6379" password="******" db="0" 
+ isGetTTL="true" patternMatchKey="true" keys="HW_*"></Node>
+```
+
+
+
 ## 节点REDIS_WRITER
-`输出节点，因key名称不可重复，所以只适合将读节点中的最后一行记录进行写入操作`
+`输出节点，通过配置patternMatchKey可实现将记录集中的某两个字段写入redis`
 
 
 | 属性         | 说明                   | 适合                         |
@@ -530,6 +539,7 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 | password       | ******               |                            |
 | db       | 0                    | 数据库ID                      |
 | isGetTTL       | true或false 是否写入ttl信息 |                            |
+| patternMatchKey       | 默认是false,当设置为true时,证明key是从renameOutputFields中指定的key中取键,从renameOutputFields中指定的value中取值 | 适合将记录集中的某两个字段写入redis      |
 | outputFields       |   | 目前只支持写string,int,float类型内容 |
 | renameOutputFields       |   | 目前只支持写string,int,float类型内容 |
 
@@ -539,6 +549,14 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
   <Node id="REDIS_WRITER_01"   type="REDIS_WRITER" desc="输出节点1"  nameServer="127.0.0.1:6379" password="******" db="1" 
   isGetTTL="true" outputFields="a1;a_1"  renameOutputFields="f1;f2"  ></Node>
 ```
+
+```shell
+
+  <Node id="REDIS_WRITER_01"   type="REDIS_WRITER" desc="输出节点1"  nameServer="127.0.0.1:6379" password="******" db="1" 
+  isGetTTL="true"   patternMatchKey="true"  outputFields="key;value;key_ttl"  renameOutputFields="key;value;key_ttl" ></Node>
+```
+
+
 
 ## 节点CUSTOM_READER_WRITER
 `自定义节点，可以通过嵌入GO脚本实现各种操作`
