@@ -22,7 +22,7 @@
 # 资源地址
 - **etl-engine下载地址**
 
-	`当前版本最后编译时间20240504`
+	`当前版本最后编译时间20240628`
 
 	[下载地址](https://github.com/hw2499/etl-engine/releases)
 
@@ -51,7 +51,7 @@
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
-- 输入输出数据源支持influxdb v1、clickhouse、prometheus、elasticsearch、hadoop（hive,hbase）、postgresql、mysql、oracle、sqlite、rocketmq、kafka、redis、excel
+- 输入输出数据源支持influxdb v1、clickhouse、prometheus、elasticsearch、hadoop（hive,hbase）、postgresql(兼容Greenplum)）、mysql(兼容Doirs和OceanBase)、oracle、sqlite、rocketmq、kafka、redis、excel
 - 任意一个输入节点可以同任意一个输出节点进行组合，遵循pipeline模型。
 - 支持跨多种类型数据库之间进行数据融合查询。
 - 支持消息流数据传输过程中与多种类型数据库之间的数据融合计算查询。
@@ -1319,7 +1319,7 @@ wal2json解码器,PostgreSQL需要安装wal2json.so插件 ,
 | 属性   | 说明       | 适合                 |
 |---|----------|--------------------|
 | id   | 唯一标示     |  |
-| type   | 数据源类型    |INFLUXDB_V1、MYSQL、CLICKHOUSE、SQLITE、POSTGRES、ORACLE、ELASTIC、HIVE|
+| type   | 数据源类型    |INFLUXDB_V1、MYSQL(兼容Doirs和OceanBase)、CLICKHOUSE、SQLITE、POSTGRES(兼容Greenplum)、ORACLE、ELASTIC、HIVE、HBSE|
 | dbURL | 连接地址     | ck,mysql,influx,postgre,oracle,elastic,hive    |
 | database   | 数据库名称    | ck,mysql,influx,sqlite,postgre,oracle,elastic,hive    |
 | username   | 用户名称     | ck,mysql,influx,postgre,oracle,elastic,hive    |
@@ -1327,6 +1327,22 @@ wal2json解码器,PostgreSQL需要安装wal2json.so插件 ,
 | token   | token名称  | influx 2x          |
 | org   | 机构名称     | influx 2x          |
 | rp   | 数据保留策略名称 | influx 1x          |
+
+- 常用数据源连接
+
+```shell
+
+    <Connection id="CONNECT_01" dbURL="http://127.0.0.1:58086" database="db1" username="user1" password="******" token=" " org="hw"  type="INFLUXDB_V1"/>
+    <Connection id="CONNECT_02" dbURL="127.0.0.1:19000" database="db1" username="user1" password="******" batchSize="1000" type="CLICKHOUSE"/> 
+    <Connection id="CONNECT_03" dbURL="127.0.0.1:3306" database="db1" username="user1" password="******"  batchSize="1000" type="MYSQL"/>
+    <Connection id="CONNECT_04"  database="d:/sqlite_db1.db"  batchSize="10000" type="SQLITE"/>  
+    <Connection id="CONNECT_05" dbURL="127.0.0.1:10000" database="db1" username="root" password="b" batchSize="1000" type="HIVE"/>
+    <Connection id="CONNECT_06" dbURL="127.0.0.1:5432" database="db_1" username="u1" password="******" batchSize="1000" type="POSTGRES" />
+    <Connection id="CONNECT_07" dbURL="http://127.0.0.1:9200" database="db1" username="elastic" password="******" batchSize="1000" type="ELASTIC"/>
+    <Connection id="CONNECT_08" dbURL="127.0.0.1:1521" database="orcl" username="c##u1" password="******"  batchSize="1000" type="ORACLE" />
+    <Connection id="CONNECT_09"  dbURL="127.0.0.1:9090" database="" username="" password=""  batchSize="1000" type="HBASE"/>
+
+```
 
 
 ## Graph
@@ -1458,6 +1474,8 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 func RunScript(dataValue string) (result string, topErr error) {
 	newRows := ""
@@ -1480,6 +1498,8 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 func RunScript(dataValue string) (result string, topErr error) {
 	newRows := ""
