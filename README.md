@@ -22,7 +22,7 @@
 # 资源地址
 - **etl-engine下载地址**
 
-	`当前版本最后编译时间20240628`
+	`当前版本最后编译时间20240728`
 
 	[下载地址](https://github.com/hw2499/etl-engine/releases)
 
@@ -51,7 +51,7 @@
 
 #  功能特性
 - 支持跨平台执行（windows,linux），只需要一个可执行文件和一个配置文件就可以运行，无需其它依赖，轻量级引擎。
-- 输入输出数据源支持influxdb v1、clickhouse、prometheus、elasticsearch、hadoop（hive,hbase）、postgresql(兼容Greenplum)）、mysql(兼容Doirs和OceanBase)、oracle、sqlite、rocketmq、kafka、redis、excel
+- 输入输出数据源支持influxdb v1、clickhouse、prometheus、elasticsearch、hadoop（hive,hbase）、postgresql(兼容Greenplum)）、mysql(兼容Doirs和OceanBase)、oracle、sqlserver、sqlite、rocketmq、kafka、redis、excel
 - 任意一个输入节点可以同任意一个输出节点进行组合，遵循pipeline模型。
 - 支持跨多种类型数据库之间进行数据融合查询。
 - 支持消息流数据传输过程中与多种类型数据库之间的数据融合计算查询。
@@ -259,7 +259,7 @@
 
 
 ### 支持源类型
-MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
+MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、SQLServer、sqlite
 
 ### 样本
 ```sh
@@ -296,10 +296,10 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 |--------------|----------------------------|-----------------------------------------|
 | id          | 唯一标示                       ||
 | type         | 类型, DB_OUTPUT_TABLE        ||
-|script| insert、delete、update SQL语句 |ck,mysql,sqlite,postgre,oracle|
+|script| insert、delete、update SQL语句 |ck,mysql,sqlite,postgre,oracle,sqlserver|
 | batchSize       | 每次批提交的记录数                  | ck,mysql,sqlite,postgre,oracle <br/>注意influx以输入时的fetchSize为批提交的大小 |
-| outputFields    | 输入节点读数据时传递过来的字段名称          | influx,ck,mysql,sqlite,postgre,oracle                         |
-| renameOutputFields    | 输出节点到目标数据源的字段名称            | influx,ck,mysql,sqlite,postgre,oracle                         |
+| outputFields    | 输入节点读数据时传递过来的字段名称          | influx,ck,mysql,sqlite,postgre,oracle,sqlserver                         |
+| renameOutputFields    | 输出节点到目标数据源的字段名称            | influx,ck,mysql,sqlite,postgre,oracle,sqlserver                         |
 | dbConnection | 数据源ID                      ||
 | desc         | 描述                         ||
 |outputTags| 输入节点读数据时传递过来的标签名称          | influx                                  |
@@ -310,7 +310,7 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 
 
 ## 支持目标类型
-MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
+MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、SQLServer、sqlite
 
 
 ### 样本
@@ -359,7 +359,7 @@ MYSQL、Influxdb 1x、CK、PostgreSQL、Oracle、sqlite
 | id    | 唯一标示       ||
 | type         | DB_EXECUTE_TABLE                                    |
 | roolback  | 是否回滚                        | false不回滚，true回滚                |
-| sqlScript | delete、update语句，多条语句之间用分号分隔 | mysql，sqlite，postgre，oracle，ck(不支持delete,update)     |
+| sqlScript | delete、update语句，多条语句之间用分号分隔 | mysql，sqlserver,sqlite，postgre，oracle，ck(不支持delete,update)     |
 | fileURL   | 外部文件                        | fileURL优先级别高于sqlScript,两个只能用一个 |
 
 
@@ -1319,11 +1319,11 @@ wal2json解码器,PostgreSQL需要安装wal2json.so插件 ,
 | 属性   | 说明       | 适合                 |
 |---|----------|--------------------|
 | id   | 唯一标示     |  |
-| type   | 数据源类型    |INFLUXDB_V1、MYSQL(兼容Doirs和OceanBase)、CLICKHOUSE、SQLITE、POSTGRES(兼容Greenplum)、ORACLE、ELASTIC、HIVE、HBSE|
-| dbURL | 连接地址     | ck,mysql,influx,postgre,oracle,elastic,hive    |
-| database   | 数据库名称    | ck,mysql,influx,sqlite,postgre,oracle,elastic,hive    |
-| username   | 用户名称     | ck,mysql,influx,postgre,oracle,elastic,hive    |
-| password   | 密码       | ck,mysql,influx,postgre,oracle,elastic,hive    |
+| type   | 数据源类型    |INFLUXDB_V1、MYSQL(兼容Doirs和OceanBase)、CLICKHOUSE、SQLSERVER、SQLITE、POSTGRES(兼容Greenplum)、ORACLE、ELASTIC、HIVE、HBSE|
+| dbURL | 连接地址     | ck,mysql,influx,postgre,oracle,elastic,hive,sqlserver    |
+| database   | 数据库名称    | ck,mysql,influx,sqlite,postgre,oracle,elastic,hive,sqlserver    |
+| username   | 用户名称     | ck,mysql,influx,postgre,oracle,elastic,hive,sqlserver    |
+| password   | 密码       | ck,mysql,influx,postgre,oracle,elastic,hive,sqlserver    |
 | token   | token名称  | influx 2x          |
 | org   | 机构名称     | influx 2x          |
 | rp   | 数据保留策略名称 | influx 1x          |
@@ -1341,6 +1341,7 @@ wal2json解码器,PostgreSQL需要安装wal2json.so插件 ,
     <Connection id="CONNECT_07" dbURL="http://127.0.0.1:9200" database="db1" username="elastic" password="******" batchSize="1000" type="ELASTIC"/>
     <Connection id="CONNECT_08" dbURL="127.0.0.1:1521" database="orcl" username="c##u1" password="******"  batchSize="1000" type="ORACLE" />
     <Connection id="CONNECT_09"  dbURL="127.0.0.1:9090" database="" username="" password=""  batchSize="1000" type="HBASE"/>
+    <Connection id="CONNECT_10"  dbURL="127.0.0.1:1433" database="master" username="sa" password="******"  batchSize="1000" type="SQLSERVER"/>
 
 ```
 
