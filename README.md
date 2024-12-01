@@ -22,7 +22,7 @@
 # 资源地址
 - **etl-engine下载地址**
 
-	`当前版本最后编译时间20240728`
+	`当前版本最后编译时间20241129`
 
 	[下载地址](https://github.com/hw2499/etl-engine/releases)
 
